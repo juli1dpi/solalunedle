@@ -3,14 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devinez la chanson</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Jeu de Devine la Chanson</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .lyrics {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .guess-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .guess-box input {
+            font-size: 16px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            margin-right: 10px;
+        }
+        .guess-box button {
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .guess-box button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div id="chanson-container">
-        <!-- Les paroles seront chargées ici -->
+    <div class="container">
+        <div class="lyrics">Cette pute fait son job, elle michtonne le bon gars, une mère perd son gosse<br>Sur l'Techness, c'est trop triste, elle s'est mise sous yah</div>
+        <div class="guess-box">
+            <input type="text" id="guess" placeholder="Devine la chanson">
+            <button onclick="checkGuess()">Valider</button>
+        </div>
+        <div id="result"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const song = "techness";
+        function checkGuess() {
+            const userGuess = document.getElementById("guess").value.toLowerCase().trim();
+            const resultDiv = document.getElementById("result");
+            if (userGuess === song) {
+                resultDiv.textContent = "Bravo, tu as deviné la chanson!";
+                resultDiv.style.color = "green";
+            } else {
+                resultDiv.textContent = "Désolé, ce n'est pas la bonne réponse.";
+                resultDiv.style.color = "red";
+            }
+        }
+    </script>
 </body>
 </html>
