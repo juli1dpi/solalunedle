@@ -3,103 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu de Devine la Chanson</title>
-    <style>
-        body {
-            background-color: #f0f0f0;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-        .lyrics {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .guess-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .guess-box input {
-            font-size: 16px;
-            padding: 10px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            width: 200px;
-            margin-right: 10px;
-        }
-        .guess-box button {
-            font-size: 16px;
-            padding: 10px;
-            border: none;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .guess-box button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            font-size: 20px;
-            margin-top: 20px;
-        }
-        .cover {
-            max-width: 300px;
-            margin-top: 20px;
-        }
-    </style>
+    <title>Devinez la chanson</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div id="lyrics" class="lyrics"></div>
-        <div class="cover"><img id="coverImage" src="" alt="Cover de la chanson"></div>
-        <div class="guess-box">
-            <input type="text" id="guessInput" placeholder="Devinez la chanson...">
-            <button onclick="checkGuess()">Valider</button>
-        </div>
-        <div id="result" class="result"></div>
+    <div id="chanson-container">
+        <!-- Les paroles seront chargées ici -->
     </div>
-    <script>
-        let chansons;
 
-        fetch('chanson.json')
-            .then(response => response.json())
-            .then(data => {
-                chansons = data;
-                const titreChansonAleatoire = Object.keys(chansons)[Math.floor(Math.random() * Object.keys(chansons).length)];
-                document.getElementById('lyrics').innerText = chansons[titreChansonAleatoire].parole;
-                document.getElementById('coverImage').src = chansons[titreChansonAleatoire].cover;
-                document.getElementById('lyrics').dataset.titreChanson = titreChansonAleatoire;
-            })
-            .catch(error => console.error('Erreur lors du chargement du fichier JSON:', error));
-
-        function checkGuess() {
-            const guessInput = document.getElementById('guessInput').value;
-            const titreChanson = document.getElementById('lyrics').dataset.titreChanson;
-            const resultat = document.getElementById('result');
-
-            if (guessInput.toLowerCase() === titreChanson.toLowerCase()) {
-                resultat.innerText = "Bravo! Vous avez deviné la chanson!";
-                resultat.style.color = 'green';
-            } else {
-                resultat.innerText = "Désolé, ce n'est pas la bonne réponse.";
-                resultat.style.color = 'red';
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
