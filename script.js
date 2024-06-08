@@ -1,5 +1,5 @@
 // URL du fichier JSON
-var url = 'solalunedle-default-rtdb-export.json';
+var url = 'chanson.json';
 
 // Requête HTTP pour récupérer le fichier JSON
 fetch(url)
