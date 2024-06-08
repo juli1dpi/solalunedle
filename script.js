@@ -1,22 +1,13 @@
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('chansons.json')
-        .then(response => response.json())
-        .then(data => {
-            const chansons = data.chansons;
-            const chansonContainer = document.getElementById('chanson-container');
+// Charger les données JSON depuis le fichier chanson.json
+fetch('chanson.json')
+  .then(response => response.json())
+  .then(data => {
+    // Récupérer l'URL de l'image des paroles de la chanson1
+    const lyricsImageUrl = data.chansons.chanson1.parole;
 
-            for (const key in chansons) {
-                if (Object.hasOwnProperty.call(chansons, key)) {
-                    const chanson = chansons[key];
-                    const chansonDiv = document.createElement('div');
-                    chansonDiv.classList.add('chanson');
-                    chansonDiv.innerHTML = `
-                        <img src="${chanson.cover}" alt="${key}">
-                        <p>${chanson.parole}</p>
-                        <input type="text" data-chanson="${key}" placeholder="Devinez la chanson">
-                    `;
-                    chansonContainer.appendChild(chansonDiv);
-                }
-            }
-        });
-});
+    // Sélectionner la balise img des paroles
+    const lyricsImage = document.getElementById('lyricsImage');
+
+    // Assigner l'URL à la balise img des paroles
+    lyricsImage.src = lyricsImageUrl;
+  });
