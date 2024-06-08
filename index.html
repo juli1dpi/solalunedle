@@ -43,41 +43,72 @@
         }
         .guess-box button {
             font-size: 16px;
-            padding: 10px 20px;
+            padding: 10px;
             border: none;
-            border-radius: 5px;
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
+            border-radius: 5px;
             cursor: pointer;
         }
         .guess-box button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="lyrics">Cette pute fait son job, elle michtonne le bon gars, une mère perd son gosse<br>Sur l'Techness, c'est trop triste, elle s'est mise sous yah</div>
-        <div class="guess-box">
-            <input type="text" id="guess" placeholder="Devine la chanson">
-            <button onclick="checkGuess()">Valider</button>
+        <div class="lyrics" id="lyrics">
+            Sélectionnez une chanson pour commencer.
         </div>
-        <div id="result"></div>
+        <div class="guess-box">
+            <input type="text" id="guess" placeholder="Devine la chanson...">
+            <button onclick="checkGuess()">Deviner</button>
+        </div>
+        <div class="result" id="result"></div>
     </div>
 
     <script>
-        const song = "techness";
+        // Liste des chansons et leurs paroles
+        const songs = {
+            "Billy": "Je vais te chanter la chanson Billy",
+            "Chanson 2": "Paroles de la chanson 2",
+            "Chanson 3": "Paroles de la chanson 3"
+        };
+
+        let currentSong = "";
+
+        // Fonction pour sélectionner une chanson aléatoirement
+        function selectSong() {
+            const songTitles = Object.keys(songs);
+            const randomIndex = Math.floor(Math.random() * songTitles.length);
+            currentSong = songTitles[randomIndex];
+            document.getElementById('lyrics').textContent = songs[currentSong];
+            document.getElementById('result').textContent = "";
+            document.getElementById('guess').value = "";
+        }
+
+        // Fonction pour vérifier la devinette
         function checkGuess() {
-            const userGuess = document.getElementById("guess").value.toLowerCase().trim();
-            const resultDiv = document.getElementById("result");
-            if (userGuess === song) {
-                resultDiv.textContent = "Bravo, tu as deviné la chanson!";
+            const userGuess = document.getElementById('guess').value.trim();
+            const resultDiv = document.getElementById('result');
+
+            if (userGuess.toLowerCase() === currentSong.toLowerCase()) {
+                resultDiv.textContent = "Félicitations ! Vous avez deviné la chanson.";
                 resultDiv.style.color = "green";
             } else {
-                resultDiv.textContent = "Désolé, ce n'est pas la bonne réponse.";
+                resultDiv.textContent = "Désolé, ce n'est pas la bonne réponse. Essayez encore.";
                 resultDiv.style.color = "red";
             }
         }
+
+        // Sélectionner une chanson au chargement de la page
+        window.onload = selectSong;
     </script>
 </body>
 </html>
