@@ -1,59 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Devine la Chanson</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Devine la Chanson</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .lyrics {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .guess-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .guess-box input {
+            font-size: 16px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            margin-right: 10px;
+        }
+        .guess-box button {
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .guess-box button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Devine la Chanson</h1>
-    
-    <div id="lyrics">
-        <!-- Les paroles de la chanson aléatoire s'afficheront ici -->
-        Laisse les parler, le goût d'la vie vaut pas l'tarif (yah, yah) <br>
-        Ouais c'est carré, que t'aimes ou pas, ouais c'est pareil
+    <div class="container">
+        <div class="lyrics">Cette pute fait son job, elle michtonne le bon gars, une mère perd son gosse<br>Sur l'Techness, c'est trop triste, elle s'est mise sous yah</div>
+        <div class="guess-box">
+            <input type="text" id="guess" placeholder="Devine la chanson">
+            <button onclick="checkGuess()">Valider</button>
+        </div>
+        <div id="result"></div>
     </div>
-    
-    <form id="guessForm">
-        <label for="guess">Devinez le titre de la chanson:</label>
-        <input type="text" id="guess" name="guess">
-        <input type="submit" value="Soumettre">
-    </form>
 
     <script>
-        // Exemple JSON
-        const chansons = {
-            "chanson1": {
-                "title": "Fissure de vie 23",
-                "cover": "https://i1.sndcdn.com/artworks-LcycItHIKByl-0-t500x500.jpg",
-                "parole": "Laisse les parler, le goût d'la vie vaut pas l'tarif (yah, yah) \n Ouais c'est carré, que t'aimes ou pas, ouais c'est pareil"
-            },
-            "chanson10": {
-                "title": "Billy",
-                "cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT5xdrKsjlVrZDo8MEoZ-divov0sWT3GaDDQ&s",
-                "parole": "Cette pute fait son job, elle michtonne le bon gars, une mère perd son gosse \n Sur l'Techness, c'est trop triste, elle s'est mise sous yah"
-            },
-            // autres chansons...
-        };
-
-        // Fonction pour choisir une chanson aléatoire
-        function getRandomChanson() {
-            const keys = Object.keys(chansons);
-            return chansons[keys[Math.floor(Math.random() * keys.length)]];
-        }
-
-        // Afficher les paroles de la chanson aléatoire
-        const randomChanson = getRandomChanson();
-        document.getElementById('lyrics').innerHTML = randomChanson.parole.replace(/\n/g, '<br>');
-
-        // Écouteur d'événement pour le formulaire
-        document.getElementById('guessForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const guess = document.getElementById('guess').value;
-            if (guess.toLowerCase() === randomChanson.title.toLowerCase()) {
-                alert('Bravo! Vous avez deviné la chanson!');
+        const song = "techness";
+        function checkGuess() {
+            const userGuess = document.getElementById("guess").value.toLowerCase();
+            const resultDiv = document.getElementById("result");
+            if (userGuess === song) {
+                resultDiv.textContent = "Bravo, tu as deviné la chanson!";
+                resultDiv.style.color = "green";
             } else {
-                alert('Désolé, ce n\'est pas la bonne réponse.');
+                resultDiv.textContent = "Désolé, ce n'est pas la bonne réponse.";
+                resultDiv.style.color = "red";
             }
-        });
+        }
     </script>
 </body>
 </html>
