@@ -8,11 +8,12 @@
         body { font-family: Arial, sans-serif; text-align: center; }
         .hint { margin-top: 20px; }
         .attempts { margin-top: 20px; }
+        .paroles { max-width: 100%; height: auto; }
     </style>
 </head>
 <body>
     <h1>Solalunedle</h1>
-    <p id="quote">"Exemple de parole de So La Lune"</p>
+    <img id="paroles" class="paroles" src="placeholder.jpg" alt="Paroles de la chanson 1">
     <input type="text" id="guess" placeholder="Devine la chanson">
     <button onclick="checkGuess()">Envoyer</button>
     <div id="hints" class="hint"></div>
@@ -23,11 +24,11 @@
         fetch('chansons.json')
           .then(response => response.json())
           .then(data => {
-            // Récupérer les paroles de la chanson 1
-            var parolesChanson1 = data.chansons.chanson1;
+            // Récupérer l'URL de la capture d'écran des paroles de la chanson 1
+            var urlParolesChanson1 = data.chansons.chanson1.url_paroles;
 
-            // Afficher les paroles de la chanson 1 dans l'élément HTML
-            document.getElementById('quote').innerText = parolesChanson1;
+            // Afficher l'image des paroles de la chanson 1
+            document.getElementById('paroles').src = urlParolesChanson1;
           })
           .catch(error => {
             console.error('Erreur lors du chargement du fichier JSON:', error);
