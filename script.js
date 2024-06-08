@@ -1,22 +1,22 @@
-// URL du fichier JSON
-var url = 'chanson.json';
+// Fonction pour récupérer les données du fichier JSON
+function fetchChansonData() {
+    fetch('chanson.json') // Récupère le fichier JSON
+        .then(response => response.json()) // Convertit la réponse en JSON
+        .then(data => {
+            // Récupère les données de la chanson 1
+            const chanson1 = data.chansons.chanson1;
+            const coverUrl = data.chansons.cover;
+            const paroleUrl = data.chansons.parole;
 
-// Requête HTTP pour récupérer le fichier JSON
-fetch(url)
-  .then(response => response.json())
-  .then(data => {
-    // Analyser les données JSON
-    // Par exemple, accéder à la chanson1 et à sa couverture
-    var chanson1 = data.chansons.chanson1;
-    var coverChanson1 = data.chansons.cover;
+            // Met à jour l'élément HTML avec l'URL de la cover
+            document.querySelector('img').src = coverUrl;
+            // Met à jour l'élément HTML avec l'URL des paroles
+            document.querySelector('img').alt = chanson1 + " - Paroles";
+        })
+        .catch(error => {
+            console.error('Une erreur s\'est produite lors de la récupération des données : ', error);
+        });
+}
 
-    // Utiliser les données dans votre site web
-    console.log("Chanson 1:", chanson1);
-    console.log("URL de la couverture de la chanson 1:", coverChanson1);
-
-    // Vous pouvez maintenant utiliser ces données pour afficher du contenu dans votre site web
-    // Par exemple, injecter ces données dans le DOM pour les afficher sur la page
-  })
-  .catch(error => {
-    console.error('Erreur lors du chargement du fichier JSON:', error);
-  });
+// Appel de la fonction pour récupérer les données au chargement de la page
+window.onload = fetchChansonData;
