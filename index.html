@@ -1,24 +1,59 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solalunedle</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .hint { margin-top: 20px; }
-        .attempts { margin-top: 20px; }
-    </style>
+    <title>Devine la Chanson</title>
 </head>
 <body>
-    <h1>Solalunedle</h1>
-    <!-- Affichage de l'image des paroles de la chanson 1 -->
-    <img src="" alt="Paroles de la chanson 1" id="lyricsImage">
-    <p id="quote">Chanson 1 : Fissure de vie 23</p>
-    <input type="text" id="guess" placeholder="Devine la chanson">
-    <button onclick="checkGuess()">Envoyer</button>
-    <div id="hints" class="hint"></div>
-    <div id="attempts" class="attempts"></div>
-    <script src="script.js"></script>
+    <h1>Devine la Chanson</h1>
+    
+    <div id="lyrics">
+        <!-- Les paroles de la chanson aléatoire s'afficheront ici -->
+        Laisse les parler, le goût d'la vie vaut pas l'tarif (yah, yah) <br>
+        Ouais c'est carré, que t'aimes ou pas, ouais c'est pareil
+    </div>
+    
+    <form id="guessForm">
+        <label for="guess">Devinez le titre de la chanson:</label>
+        <input type="text" id="guess" name="guess">
+        <input type="submit" value="Soumettre">
+    </form>
+
+    <script>
+        // Exemple JSON
+        const chansons = {
+            "chanson1": {
+                "title": "Fissure de vie 23",
+                "cover": "https://i1.sndcdn.com/artworks-LcycItHIKByl-0-t500x500.jpg",
+                "parole": "Laisse les parler, le goût d'la vie vaut pas l'tarif (yah, yah) \n Ouais c'est carré, que t'aimes ou pas, ouais c'est pareil"
+            },
+            "chanson10": {
+                "title": "Billy",
+                "cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT5xdrKsjlVrZDo8MEoZ-divov0sWT3GaDDQ&s",
+                "parole": "Cette pute fait son job, elle michtonne le bon gars, une mère perd son gosse \n Sur l'Techness, c'est trop triste, elle s'est mise sous yah"
+            },
+            // autres chansons...
+        };
+
+        // Fonction pour choisir une chanson aléatoire
+        function getRandomChanson() {
+            const keys = Object.keys(chansons);
+            return chansons[keys[Math.floor(Math.random() * keys.length)]];
+        }
+
+        // Afficher les paroles de la chanson aléatoire
+        const randomChanson = getRandomChanson();
+        document.getElementById('lyrics').innerHTML = randomChanson.parole.replace(/\n/g, '<br>');
+
+        // Écouteur d'événement pour le formulaire
+        document.getElementById('guessForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const guess = document.getElementById('guess').value;
+            if (guess.toLowerCase() === randomChanson.title.toLowerCase()) {
+                alert('Bravo! Vous avez deviné la chanson!');
+            } else {
+                alert('Désolé, ce n\'est pas la bonne réponse.');
+            }
+        });
+    </script>
 </body>
 </html>
