@@ -17,6 +17,26 @@
     <button onclick="checkGuess()">Envoyer</button>
     <div id="hints" class="hint"></div>
     <div id="attempts" class="attempts"></div>
-    <script src="script.js"></script>
+
+    <script>
+        // Requête HTTP pour récupérer les données du fichier JSON
+        fetch('chansons.json')
+          .then(response => response.json())
+          .then(data => {
+            // Récupérer les paroles de la chanson 1
+            var parolesChanson1 = data.chansons.chanson1;
+
+            // Afficher les paroles de la chanson 1 dans l'élément HTML
+            document.getElementById('quote').innerText = parolesChanson1;
+          })
+          .catch(error => {
+            console.error('Erreur lors du chargement du fichier JSON:', error);
+          });
+
+        // Fonction pour vérifier la réponse de l'utilisateur
+        function checkGuess() {
+          // Code de vérification de la réponse ici...
+        }
+    </script>
 </body>
 </html>
