@@ -57,11 +57,16 @@
             font-size: 20px;
             margin-top: 20px;
         }
+        .cover {
+            max-width: 300px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div id="lyrics" class="lyrics"></div>
+        <div class="cover"><img id="coverImage" src="" alt="Cover de la chanson"></div>
         <div class="guess-box">
             <input type="text" id="guessInput" placeholder="Devinez la chanson...">
             <button onclick="checkGuess()">Valider</button>
@@ -76,7 +81,8 @@
             .then(data => {
                 chansons = data;
                 const titreChansonAleatoire = Object.keys(chansons)[Math.floor(Math.random() * Object.keys(chansons).length)];
-                document.getElementById('lyrics').innerText = chansons[titreChansonAleatoire];
+                document.getElementById('lyrics').innerText = chansons[titreChansonAleatoire].parole;
+                document.getElementById('coverImage').src = chansons[titreChansonAleatoire].cover;
                 document.getElementById('lyrics').dataset.titreChanson = titreChansonAleatoire;
             })
             .catch(error => console.error('Erreur lors du chargement du fichier JSON:', error));
