@@ -68,7 +68,7 @@
     <script>
         const song = "techness";
         function checkGuess() {
-            const userGuess = document.getElementById("guess").value.toLowerCase();
+            const userGuess = document.getElementById("guess").value.toLowerCase().trim();
             const resultDiv = document.getElementById("result");
             if (userGuess === song) {
                 resultDiv.textContent = "Bravo, tu as deviné la chanson!";
