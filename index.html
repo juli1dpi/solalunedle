@@ -4,10 +4,10 @@
     <title>Devine la Chanson</title>
 </head>
 <body>
-    <h1>Devine la Chansn</h1>
+    <h1>Devine la Chanson</h1>
     
     <div id="lyrics">
-        
+        <!-- Les paroles de la chanson aléatoire s'afficheront ici -->
     </div>
     
     <form id="guessForm">
@@ -137,34 +137,28 @@
     }};
 
             
-        // Fonction pour choisir une chanson aléatoire
-function getRandomChanson() {
-    const keys = Object.keys(chansons);
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    const chanson = chansons[randomKey];
-    const numeroChanson = parseInt(randomKey.slice(7)); // Obtient le numéro de la chanson à partir de la clé
-    const paroleKey = "parole" + numeroChanson; // Utilise le numéro pour obtenir la clé correcte de la parole
-    const parole = chanson.parole; // Il n'est pas nécessaire de concaténer paroleKey ici
-    return { title: chanson.title, cover: chanson.cover, parole: parole };
-}
+         // Fonction pour choisir une chanson aléatoire
+        function getRandomChanson() {
+            const keys = Object.keys(chansons);
+            const randomKey = keys[Math.floor(Math.random() * keys.length)];
+            const chanson = chansons[randomKey];
+            return { title: chanson.title, cover: chanson.cover, parole: chanson.parole };
+        }
 
+        // Afficher les paroles de la chanson aléatoire
+        const randomChanson = getRandomChanson();
+        document.getElementById('lyrics').innerHTML = randomChanson.parole.replace(/\n/g, '<br>');
 
-
-
-// Afficher les paroles de la chanson aléatoire
-const randomChanson = getRandomChanson();
-document.getElementById('lyrics').innerHTML = randomChanson.parole.replace(/\n/g, '<br>');
-
-// Écouteur d'événement pour le formulaire
-document.getElementById('guessForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const guess = document.getElementById('guess').value;
-    if (guess.toLowerCase() === randomChanson.title.toLowerCase()) {
-        alert('Bravo! Vous avez deviné la chanson!');
-    } else {
-        alert('Désolé, ce n\'est pas la bonne réponse.');
-    }
-});
+        // Écouteur d'événement pour le formulaire
+        document.getElementById('guessForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const guess = document.getElementById('guess').value;
+            if (guess.toLowerCase() === randomChanson.title.toLowerCase()) {
+                alert('Bravo! Vous avez deviné la chanson!');
+            } else {
+                alert('Désolé, ce n\'est pas la bonne réponse.');
+            }
+        });
     </script>
 </body>
 </html>
