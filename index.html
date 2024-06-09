@@ -146,9 +146,11 @@
 function getRandomChanson() {
     const keys = Object.keys(chansons);
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    return chansons[randomKey];
+    const chanson = chansons[randomKey];
+    const paroleKey = "parole" + randomKey.slice(7); // Obtient le numéro de la chanson à partir de la clé
+    const parole = chansons[paroleKey];
+    return { title: chanson.title, cover: chanson.cover, parole: parole };
 }
-
 // Afficher les paroles de la chanson aléatoire
 const randomChanson = getRandomChanson();
 document.getElementById('lyrics').innerHTML = randomChanson.parole.replace(/\n/g, '<br>');
