@@ -189,7 +189,7 @@
         const guess = document.getElementById('guess').value;
         let correct = false;
         for (const key in chansons) {
-            if (chansons.hasOwnProperty(key) && chansons[key].title.toLowerCase() === guess.toLowerCase()) {
+            if (chansons[key].title.toLowerCase() === guess.toLowerCase() || chansons[key].parole.toLowerCase().includes(guess.toLowerCase())) {
                 alert('Correct !');
                 correct = true;
                 break;
