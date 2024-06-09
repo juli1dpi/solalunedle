@@ -190,7 +190,7 @@
     let correct = false;
     for (const key in chansons) {
         const title = chansons[key].title;
-        if (title === guess) {
+        if (title === guess && document.getElementById('guess').list.querySelector(`[value="${guess}"]`)) {
             alert('Correct !');
             correct = true;
             break;
