@@ -146,8 +146,9 @@
         // Fonction pour choisir une chanson aléatoire
         function getRandomChanson() {
             const keys = Object.keys(chansons);
-            return chansons[keys[Math.floor(Math.random() * keys.length)]];
-        }
+            const randomKey = keys[Math.floor(Math.random() * keys.length)];
+            return chansons[randomKey];
+}
 
         // Afficher les paroles de la chanson aléatoire
         const randomChanson = getRandomChanson();
