@@ -21,7 +21,6 @@
     <script>
        // Exemple JSON
         const chansons = {
-            {
     "chanson1": {
         "title": "Fissure de vie 23",
         "cover": "https://i1.sndcdn.com/artworks-LcycItHIKByl-0-t500x500.jpg",
@@ -55,8 +54,8 @@
     "chanson104": {
         "title": "La pierre",
         "cover": "https://t2.genius.com/unsafe/340x340/https%3A%2F%2Fimages.genius.com%2Fc1b3ec6b8b3ceb3a9e5c4ed15b554506.1000x1000x1.png",
-        "parole": "J'fais un dans la soucoupe normal, han \n Si j'les tords pas, j'dors mal"
-    },
+        "parole": "J'fais un dans la soucoupe normal, (han) \n Si j'les tords pas, j'dors mal"
+        },
     "chanson105": {
         "title": "Numéro 11",
         "cover": "https://t2.genius.com/unsafe/340x340/https%3A%2F%2Fimages.genius.com%2Fc1b3ec6b8b3ceb3a9e5c4ed15b554506.1000x1000x1.png",
@@ -137,13 +136,9 @@
         "title": "Loup",
         "cover": "https://t2.genius.com/unsafe/340x340/https%3A%2F%2Fimages.genius.com%2Fd7c205ba03d887746f5898d29559182a.1000x1000x1.jpg",
         "parole": "Qui a dit qu'les rêves, c'est mort ? (j'avais mes rai…) \n J'avais mes raisons si j't'ai laissé"
-    }
-}
+    }};
 
-            // autres chansons...
-        };
-
-        // Fonction pour choisir une chanson aléatoire
+            
         // Fonction pour choisir une chanson aléatoire
 function getRandomChanson() {
     const keys = Object.keys(chansons);
@@ -152,8 +147,9 @@ function getRandomChanson() {
     const numeroChanson = parseInt(randomKey.slice(7)); // Obtient le numéro de la chanson à partir de la clé
     const paroleKey = "parole" + numeroChanson; // Utilise le numéro pour obtenir la clé correcte de la parole
     const parole = chanson.parole; // Il n'est pas nécessaire de concaténer paroleKey ici
-    return {parole : parole };
+    return { title: chanson.title, cover: chanson.cover, parole: parole };
 }
+
 
 
 
