@@ -190,7 +190,7 @@
     let correct = false;
     for (const key in chansons) {
         const title = chansons[key].title.toLowerCase();
-        if (title.includes(guess)) {
+        if (title === guess) {
             alert('Correct !');
             correct = true;
             break;
@@ -200,6 +200,7 @@
         alert('Incorrect, essayez encore.');
     }
 });
+
 </script>
 </body>
 </html>
