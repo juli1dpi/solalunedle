@@ -188,19 +188,16 @@
     event.preventDefault();
     const guess = document.getElementById('guess').value.trim();
     let correct = false;
-    for (const key in chansons) {
-        const title = chansons[key].title;
-        if (title === guess && document.getElementById('guess').list.querySelector(`[value="${guess}"]`)) {
-            alert('Correct !');
-            correct = true;
-            break;
-        }
+    const lyricsDiv = document.getElementById('lyrics');
+    const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title;
+    if (guess === lyricsTitle) {
+        alert('Correct !');
+        correct = true;
     }
     if (!correct) {
         alert('Incorrect, essayez encore.');
     }
 });
-
 </script>
 </body>
 </html>
