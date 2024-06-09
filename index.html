@@ -86,6 +86,18 @@
     </style>
 </head>
 <body>
+    <h1>Devine la Chanson</h1>
+    
+    <div id="lyrics"></div>
+    
+    <form id="guessForm">
+        <input type="text" id="guess" name="guess" placeholder="Entrez le titre de la chanson">
+        <div id="suggestions"></div>
+        <input type="submit" value="Soumettre">
+    </form>
+
+    <script>
+        // Liste des chansons
         const chansons = {
             "chanson1": {
                 "title": "Fissure de vie 23",
@@ -159,6 +171,7 @@
             }
         };
 
+        // Récupérer le champ de saisie
         const guessInput = document.getElementById('guess');
         // Récupérer la liste des suggestions
         const suggestionsDiv = document.getElementById('suggestions');
