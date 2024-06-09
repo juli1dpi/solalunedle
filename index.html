@@ -186,10 +186,10 @@
     // Ajouter la logique de soumission du formulaire
     document.getElementById('guessForm').addEventListener('submit', function (event) {
     event.preventDefault();
-    const guess = document.getElementById('guess').value.trim().toLowerCase();
+    const guess = document.getElementById('guess').value.trim();
     let correct = false;
     for (const key in chansons) {
-        const title = chansons[key].title.toLowerCase();
+        const title = chansons[key].title;
         if (title === guess) {
             alert('Correct !');
             correct = true;
