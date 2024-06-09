@@ -60,29 +60,30 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
-
+        
         #suggestions {
-            position: absolute;
-            top: calc(100% + 10px);
-            width: 100%;
-            max-width: 300px;
-            border: 1px solid #ccc;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
-            z-index: 1;
-        }
+        position: absolute;
+        top: calc(100% + 10px); /* position en dessous du champ de saisie */
+        width: 100%;
+        max-width: 300px;
+        border: 1px solid #ccc;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: none;
+        z-index: 1;
+    }
 
-        .suggestion-item {
-            padding: 10px;
-            cursor: pointer;
-        }
+    .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+    }
 
-        .suggestion-item:hover {
-            background-color: #f0f0f0;
-        }
+    .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
     </style>
+    
 </head>
 <body>
     <h1>Devine la Chanson</h1>
@@ -94,6 +95,29 @@
         <datalist id="titles"></datalist>
         <input type="submit" value="Soumettre">
     </form>
+
+    <script>
+        const chansons = {
+            "chanson1": {
+                "title": "Fissure de vie 23",
+                "parole": "Laisse les parler, le goût d'la vie vaut pas l'tarif (yah, yah) \n Ouais c'est carré, que t'aimes ou pas, ouais c'est pareil"
+            },
+            "chanson10": {
+                "title": "Billy",
+                "parole": "Cette pute fait son job, elle michtonne le bon gars, une mère perd son gosse \n Sur l'Techness, c'est trop triste, elle s'est mise sous yah"
+            },
+            "chanson100": {
+                "title": "Gepetto",
+                "parole": "Désolé si j'plombe l'ambiance, j'étais l'clown d'la classe, j'm'en tamponne d'la prof' \n C'qu'elle raconte, pour moi, c'est des contes de fée"
+            },
+            // Ajoutez d'autres chansons ici si nécessaire
+        };
+
+        // Votre script JavaScript ici
+    </script>
+</body>
+</html>
+
 
     <script>
         const chansons = {
