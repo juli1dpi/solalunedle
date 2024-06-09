@@ -147,8 +147,9 @@ function getRandomChanson() {
     const keys = Object.keys(chansons);
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
     const chanson = chansons[randomKey];
-    return { title: chanson, cover: chansons[randomKey + "_cover"], parole: chansons[randomKey + "_parole"] };
+    return { title: chanson.title, cover: chanson.cover, parole: chanson.parole };
 }
+
 
 // Afficher les paroles de la chanson aléatoire
 const randomChanson = getRandomChanson();
