@@ -152,7 +152,7 @@ function getRandomChanson() {
     const numeroChanson = parseInt(randomKey.slice(7)); // Obtient le numéro de la chanson à partir de la clé
     const paroleKey = "parole" + numeroChanson; // Utilise le numéro pour obtenir la clé correcte de la parole
     const parole = chanson.parole; // Il n'est pas nécessaire de concaténer paroleKey ici
-    return {parole};
+    return {parole : parole };
 }
 
 
