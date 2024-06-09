@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+voici mon code <!DOCTYPE html>
 <html>
 <head>
     <title>Devine la Chanson</title>
@@ -35,6 +35,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
         #guess {
@@ -63,7 +64,7 @@
 
         #suggestions {
             position: absolute;
-            top: calc(100% + 10px);
+            top: 50px;
             width: 100%;
             max-width: 300px;
             border: 1px solid #ccc;
@@ -83,7 +84,6 @@
             background-color: #f0f0f0;
         }
     </style>
-    
 </head>
 <body>
     <h1>Devine la Chanson</h1>
@@ -92,12 +92,12 @@
     
     <form id="guessForm">
         <input type="text" id="guess" name="guess" placeholder="Entrez le titre de la chanson">
-        <datalist id="titles"></datalist>
-        <input type="submit" value="Soumettre">
         <div id="suggestions"></div>
+        <input type="submit" value="Soumettre">
     </form>
-        
+
     <script>
+        // Liste des chansons
         const chansons = {
             "chanson1": {
                 "title": "Fissure de vie 23",
@@ -171,9 +171,10 @@
             }
         };
 
+        // Récupérer le champ de saisie
         const guessInput = document.getElementById('guess');
+        // Récupérer la liste des suggestions
         const suggestionsDiv = document.getElementById('suggestions');
-        const titlesDatalist = document.getElementById('titles');
 
         // Fonction pour afficher les suggestions
         function showSuggestions() {
@@ -184,7 +185,7 @@
 
             // Filtrer les titres des chansons
             const suggestions = Object.values(chansons).filter(chanson =>
-                chanson.title.toLowerCase().includes(input)
+                chanson.title.toLowerCase().startsWith(input)
             );
 
             // Afficher les suggestions
@@ -197,8 +198,6 @@
                     guessInput.value = chanson.title;
                     // Cacher les suggestions
                     suggestionsDiv.style.display = 'none';
-                    // Afficher les paroles de la chanson sélectionnée
-                    document.getElementById('lyrics').textContent = chanson.parole;
                 });
                 suggestionsDiv.appendChild(suggestionItem);
             });
@@ -211,29 +210,8 @@
             }
         }
 
-        // Remplir la liste déroulante avec tous les titres
-        Object.values(chansons).forEach(chanson => {
-            const option = document.createElement('option');
-            option.value = chanson.title;
-            titlesDatalist.appendChild(option);
-        });
-
-        // Ajouter la logique de soumission du formulaire
-        document.getElementById('guessForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const guess = document.getElementById('guess').value;
-            let correct = false;
-            for (const key in chansons) {
-                if (chansons.hasOwnProperty(key) && chansons[key].title.toLowerCase() === guess.toLowerCase()) {
-                    alert('Correct !');
-                    correct = true;
-                    break;
-                }
-            }
-            if (!correct) {
-                alert('Incorrect, essayez encore.');
-            }
-        });
+        // Écouter les événements de saisie sur le champ de texte
+        guessInput.addEventListener('input', showSuggestions);
     </script>
 </body>
 </html>
