@@ -155,16 +155,16 @@ function getRandomChanson() {
 const randomChanson = getRandomChanson();
 document.getElementById('lyrics').innerHTML = randomChanson.parole.replace(/\n/g, '<br>');
 
-        // Écouteur d'événement pour le formulaire
-        document.getElementById('guessForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const guess = document.getElementById('guess').value;
-            if (guess.toLowerCase() === randomChanson.title.toLowerCase()) {
-                alert('Bravo! Vous avez deviné la chanson!');
-            } else {
-                alert('Désolé, ce n\'est pas la bonne réponse.');
-            }
-        });
+// Écouteur d'événement pour le formulaire
+document.getElementById('guessForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const guess = document.getElementById('guess').value;
+    if (guess.toLowerCase() === randomChanson.title.toLowerCase()) {
+        alert('Bravo! Vous avez deviné la chanson!');
+    } else {
+        alert('Désolé, ce n\'est pas la bonne réponse.');
+    }
+});
     </script>
 </body>
 </html>
