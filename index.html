@@ -147,15 +147,41 @@
             }
         };
 
-        // Remplir les suggestions dynamiquement
-        const datalist = document.getElementById('titles');
-        for (const key in chansons) {
-            if (chansons.hasOwnProperty(key)) {
-                const option = document.createElement('option');
-                option.value = chansons[key].title;
-                datalist.appendChild(option);
-            }
-        }
+        // Fonction pour afficher les suggestions
+function showSuggestions() {
+    // Récupérer la valeur saisie
+    const input = guessInput.value.toLowerCase();
+    // Effacer les suggestions précédentes
+    suggestionsDiv.innerHTML = '';
+
+    // Filtrer les titres des chansons
+    const suggestions = Object.values(chansons).filter(chanson =>
+        chanson.title.toLowerCase().includes(input)
+    );
+
+    // Afficher les suggestions
+    suggestions.forEach(chanson => {
+        const suggestionItem = document.createElement('div');
+        suggestionItem.classList.add('suggestion-item');
+        suggestionItem.textContent = chanson.title;
+        suggestionItem.addEventListener('click', () => {
+            // Remplacer la valeur saisie par la suggestion cliquée
+            guessInput.value = chanson.title;
+            // Cacher les suggestions
+            suggestionsDiv.style.display = 'none';
+            // Afficher les paroles de la chanson sélectionnée
+            document.getElementById('lyrics').textContent = chanson.parole;
+        });
+        suggestionsDiv.appendChild(suggestionItem);
+    });
+
+    // Afficher les suggestions si la saisie n'est pas vide
+    if (input) {
+        suggestionsDiv.style.display = 'block';
+    } else {
+        suggestionsDiv.style.display = 'none';
+    }
+}
 
         // Afficher des paroles aléatoires au chargement
         const lyricsDiv = document.getElementById('lyrics');
