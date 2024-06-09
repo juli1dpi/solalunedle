@@ -1,37 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!DOCTYPE html>
+<html>
+<head>
     <title>Devine la Chanson</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        #lyrics {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            font-size: 24px;
-            width: 80%;
-            max-width: 600px;
-            margin-bottom: 20px;
-        }
-
-        #guessForm {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -39,43 +13,46 @@
         }
 
         #guess {
-            padding: 10px;
-            font-size: 18px;
-            margin-bottom: 10px;
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #suggestions {
+            position: absolute;
+            top: 50px;
             width: 100%;
             max-width: 300px;
             border: 1px solid #ccc;
+            background-color: white;
             border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1;
         }
 
-        input[type="submit"] {
-            padding: 10px 20px;
-            font-size: 18px;
-            color: white;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
+        .suggestion-item {
+            padding: 10px;
             cursor: pointer;
         }
 
-        input[type="submit"]:hover {
-            background-color: #0056b3;
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
         }
     </style>
 </head>
 <body>
-    <h1>Devine la Chanson</h1>
-    
+<h1>Devine la Chanson</h1>
     <div id="lyrics"></div>
-    
+
     <form id="guessForm">
+        <input type="text" id="guess" name="guess" list="titles" placeholder="Entrez le titre de la chanson">
+        <datalist id="titles"></datalist>
         <input type="text" id="guess" name="guess" placeholder="Entrez le titre de la chanson">
         <div id="suggestions"></div>
         <input type="submit" value="Soumettre">
     </form>
 
     <script>
-        // Liste des chansons
         const chansons = {
             "chanson1": {
                 "title": "Fissure de vie 23",
@@ -148,48 +125,36 @@
                 "parole": "J'ai"
             }
         };
-
-        // Récupérer le champ de saisie
-        const guessInput = document.getElementById('guess');
-        // Récupérer la liste des suggestions
-        const suggestionsDiv = document.getElementById('suggestions');
-
-        // Fonction pour afficher les suggestions
-        function showSuggestions() {
-            // Récupérer la valeur saisie
-            const input = guessInput.value.toLowerCase();
-            // Effacer les suggestions précédentes
-            suggestionsDiv.innerHTML = '';
-
-            // Filtrer les titres des chansons
-            const suggestions = Object.values(chansons).filter(chanson =>
-                chanson.title.toLowerCase().startsWith(input)
-            );
-
-            // Afficher les suggestions
-            suggestions.forEach(chanson => {
-                const suggestionItem = document.createElement('div');
-                suggestionItem.classList.add('suggestion-item');
-                suggestionItem.textContent = chanson.title;
-                suggestionItem.addEventListener('click', () => {
-                    // Remplacer la valeur saisie par la suggestion cliquée
-                    guessInput.value = chanson.title;
-                    // Cacher les suggestions
-                    suggestionsDiv.style.display = 'none';
-                });
-                suggestionsDiv.appendChild(suggestionItem);
-            });
-
-            // Afficher les suggestions si la saisie n'est pas vide
-            if (input) {
-                suggestionsDiv.style.display = 'block';
-            } else {
-                suggestionsDiv.style.display = 'none';
+        // Remplir les suggestions dynamiquement
+        const datalist = document.getElementById('titles');
+        for (const key in chansons) {
+            if (chansons.hasOwnProperty(key)) {
+                const option = document.createElement('option');
+                option.value = chansons[key].title;
+                datalist.appendChild(option);
             }
         }
-
-        // Écouter les événements de saisie sur le champ de texte
-        guessInput.addEventListener('input', showSuggestions);
+        // Afficher des paroles aléatoires au chargement
+        const lyricsDiv = document.getElementById('lyrics');
+        const keys = Object.keys(chansons);
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        lyricsDiv.textContent = chansons[randomKey].parole;
+        // Ajouter la logique de soumission du formulaire
+        document.getElementById('guessForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const guess = document.getElementById('guess').value;
+            let correct = false;
+            for (const key in chansons) {
+                if (chansons.hasOwnProperty(key) && chansons[key].title.toLowerCase() === guess.toLowerCase()) {
+                    alert('Correct !');
+                    correct = true;
+                    break;
+                }
+            }
+            if (!correct) {
+                alert('Incorrect, essayez encore.');
+            }
+        });
     </script>
 </body>
 </html>
