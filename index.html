@@ -95,8 +95,63 @@
         <div id="suggestions"></div>
         <input type="submit" value="Soumettre">
     </form>
-    
+
     <script>
+        // Liste des chansons
+        const chansons = {
+            "chanson1": {
+                "title": "Fissure de vie 23",
+                "cover": "https://i1.sndcdn.com/artworks-LcycItHIKByl-0-t500x500.jpg",
+                "parole": "Laisse les parler, le goût d'la vie vaut pas l'tarif (yah, yah) \n Ouais c'est carré, que t'aimes ou pas, ouais c'est pareil"
+            },
+            // Ajoutez d'autres chansons ici
+        };
+
+        // Récupérer le champ de saisie
+        const guessInput = document.getElementById('guess');
+        // Récupérer la liste des suggestions
+        const suggestionsDiv = document.getElementById('suggestions');
+
+        // Fonction pour afficher les suggestions
+        function showSuggestions() {
+            // Récupérer la valeur saisie
+            const input = guessInput.value.toLowerCase();
+            // Effacer les suggestions précédentes
+            suggestionsDiv.innerHTML = '';
+
+            // Filtrer les titres des chansons
+            const suggestions = Object.values(chansons).filter(chanson =>
+                chanson.title.toLowerCase().startsWith(input)
+            );
+
+            // Afficher les suggestions
+            suggestions.forEach(chanson => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.classList.add('suggestion-item');
+                suggestionItem.textContent = chanson.title;
+                suggestionItem.addEventListener('click', () => {
+                    // Remplacer la valeur saisie par la suggestion cliquée
+                    guessInput.value = chanson.title;
+                    // Cacher les suggestions
+                    suggestionsDiv.style.display = 'none';
+                });
+                suggestionsDiv.appendChild(suggestionItem);
+            });
+
+            // Afficher les suggestions si la saisie n'est pas vide
+            if (input) {
+                suggestionsDiv.style.display = 'block';
+            } else {
+                suggestionsDiv.style.display = 'none';
+            }
+        }
+
+        // Écouter les événements de saisie sur le champ de texte
+        guessInput.addEventListener('input', showSuggestions);
+    </script>
+</body>
+</html>
+
         const chansons = {
             "chanson1": {
                 "title": "Fissure de vie 23",
@@ -170,38 +225,46 @@
             }
         };
 
-        // Remplir les suggestions dynamiquement
-        const datalist = document.getElementById('titles');
-        for (const key in chansons) {
-            if (chansons.hasOwnProperty(key)) {
-                const option = document.createElement('option');
-                option.value = chansons[key].title;
-                datalist.appendChild(option);
+        const guessInput = document.getElementById('guess');
+        // Récupérer la liste des suggestions
+        const suggestionsDiv = document.getElementById('suggestions');
+
+        // Fonction pour afficher les suggestions
+        function showSuggestions() {
+            // Récupérer la valeur saisie
+            const input = guessInput.value.toLowerCase();
+            // Effacer les suggestions précédentes
+            suggestionsDiv.innerHTML = '';
+
+            // Filtrer les titres des chansons
+            const suggestions = Object.values(chansons).filter(chanson =>
+                chanson.title.toLowerCase().startsWith(input)
+            );
+
+            // Afficher les suggestions
+            suggestions.forEach(chanson => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.classList.add('suggestion-item');
+                suggestionItem.textContent = chanson.title;
+                suggestionItem.addEventListener('click', () => {
+                    // Remplacer la valeur saisie par la suggestion cliquée
+                    guessInput.value = chanson.title;
+                    // Cacher les suggestions
+                    suggestionsDiv.style.display = 'none';
+                });
+                suggestionsDiv.appendChild(suggestionItem);
+            });
+
+            // Afficher les suggestions si la saisie n'est pas vide
+            if (input) {
+                suggestionsDiv.style.display = 'block';
+            } else {
+                suggestionsDiv.style.display = 'none';
             }
         }
 
-        // Afficher des paroles aléatoires au chargement
-        const lyricsDiv = document.getElementById('lyrics');
-        const keys = Object.keys(chansons);
-        const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        lyricsDiv.textContent = chansons[randomKey].parole;
-
-        // Ajouter la logique de soumission du formulaire
-        document.getElementById('guessForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const guess = document.getElementById('guess').value;
-            let correct = false;
-            for (const key in chansons) {
-                if (chansons.hasOwnProperty(key) && chansons[key].title.toLowerCase() === guess.toLowerCase()) {
-                    alert('Correct !');
-                    correct = true;
-                    break;
-                }
-            }
-            if (!correct) {
-                alert('Incorrect, essayez encore.');
-            }
-        });
+        // Écouter les événements de saisie sur le champ de texte
+        guessInput.addEventListener('input', showSuggestions);
     </script>
 </body>
 </html>
