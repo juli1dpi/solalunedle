@@ -147,7 +147,10 @@ function getRandomChanson() {
     const keys = Object.keys(chansons);
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
     const chanson = chansons[randomKey];
-    return { title: chanson.title, cover: chanson.cover, parole: chanson.parole };
+    const numeroChanson = parseInt(randomKey.slice(7)); // Obtient le numéro de la chanson à partir de la clé
+    const paroleKey = "parole" + numeroChanson; // Utilise le numéro pour obtenir la clé correcte de la parole
+    const parole = chanson[paroleKey];
+    return { title: chanson.title, cover: chanson.cover, parole: parole };
 }
 
 
