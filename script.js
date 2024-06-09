@@ -2,12 +2,12 @@
 fetch('chanson.json')
   .then(response => response.json())
   .then(data => {
-    // Récupérer l'URL de l'image des paroles de la chanson1
-    const lyricsImageUrl = data.chansons.chanson1.parole;
+    // Récupérer les paroles de la première chanson
+    const paroleChanson1 = data.chansons.chanson1.parole;
 
-    // Sélectionner la balise img des paroles
-    const lyricsImage = document.getElementById('lyricsImage');
+    // Sélectionner l'élément où afficher les paroles
+    const lyricsDiv = document.getElementById('lyrics');
 
-    // Assigner l'URL à la balise img des paroles
-    lyricsImage.src = lyricsImageUrl;
+    // Assigner les paroles à l'élément
+    lyricsDiv.innerText = paroleChanson1;
   });
