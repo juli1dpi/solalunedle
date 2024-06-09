@@ -60,6 +60,29 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+        
+        #suggestions {
+        position: absolute;
+        top: calc(100% + 10px); /* position en dessous du champ de saisie */
+        width: 100%;
+        max-width: 300px;
+        border: 1px solid #ccc;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: none;
+        z-index: 1;
+    }
+
+    .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
+        
     </style>
 </head>
 <body>
