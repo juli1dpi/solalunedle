@@ -35,7 +35,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative;
         }
 
         #guess {
@@ -170,12 +169,6 @@
         };
         // Remplir les suggestions dynamiquement
     const datalist = document.getElementById('titles');
-    const chansons = {
-        "chanson1": {"title": "Fissure de vie 23"},
-        "chanson2": {"title": "Billy"},
-        // Ajoutez les autres chansons ici...
-    };
-
     for (const key in chansons) {
         if (chansons.hasOwnProperty(key)) {
             const option = document.createElement('option');
