@@ -35,7 +35,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative; /* Ajout de position relative pour positionner les suggestions */
         }
 
         #guess {
@@ -65,7 +64,7 @@
         #suggestions {
             position: absolute;
             top: calc(100% + 10px);
-            width: calc(100% - 22px); /* Ajustement de la largeur */
+            width: 100%;
             max-width: 300px;
             border: 1px solid #ccc;
             background-color: white;
@@ -73,7 +72,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: none;
             z-index: 1;
-            left: 0; /* Alignement à gauche */
         }
 
         .suggestion-item {
@@ -100,11 +98,6 @@
     </form>
         
     <script>
-        // Votre JavaScript va ici
-    </script>
-</body>
-</html>
-
         const chansons = {
             "chanson1": {
                 "title": "Fissure de vie 23",
