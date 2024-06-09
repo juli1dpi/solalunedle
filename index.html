@@ -177,6 +177,12 @@
         }
     }
 
+    // Afficher des paroles aléatoires au chargement
+    const lyricsDiv = document.getElementById('lyrics');
+    const keys = Object.keys(chansons);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    lyricsDiv.textContent = chansons[randomKey].parole;
+
     // Ajouter la logique de soumission du formulaire
     document.getElementById('guessForm').addEventListener('submit', function (event) {
         event.preventDefault();
