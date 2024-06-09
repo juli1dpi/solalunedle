@@ -144,15 +144,16 @@
         };
 
         // Fonction pour choisir une chanson aléatoire
-        function getRandomChanson() {
-            const keys = Object.keys(chansons);
-            const randomKey = keys[Math.floor(Math.random() * keys.length)];
-            return chanson[randomKey];
+        // Fonction pour choisir une chanson aléatoire
+function getRandomChanson() {
+    const keys = Object.keys(chansons);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    return chansons[randomKey];
 }
 
-        // Afficher les paroles de la chanson aléatoire
-        const randomChanson = getRandomChanson();
-        document.getElementById('lyrics').innerHTML = randomChanson.parole.replace(/\n/g, '<br>');
+// Afficher les paroles de la chanson aléatoire
+const randomChanson = getRandomChanson();
+document.getElementById('lyrics').innerHTML = randomChanson.parole.replace(/\n/g, '<br>');
 
         // Écouteur d'événement pour le formulaire
         document.getElementById('guessForm').addEventListener('submit', function(event) {
