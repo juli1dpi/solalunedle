@@ -104,6 +104,26 @@
             margin-right: 10px;
             border-radius: 50%;
         }
+        
+        #incorrectGuesses {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .incorrect-guess {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -114,6 +134,7 @@
         <div id="suggestions"></div>
         <input type="submit" value="Soumettre">
     </form>
+    <div id="incorrectGuesses"></div>
 
     <script>
         const chansons = {
@@ -923,6 +944,18 @@
             }
             if (!correct) {
                 alert('Incorrect, essayez encore.');
+            suggestions.forEach(suggestion => {
+                    if (suggestion.textContent.trim() === guess) {
+                        suggestion.remove();
+                    }
+                });
+
+                // Ajouter la suggestion incorrecte à l'historique
+                const incorrectGuessesDiv = document.getElementById('incorrectGuesses');
+                const incorrectGuess = document.createElement('div');
+                incorrectGuess.classList.add('incorrect-guess');
+                incorrectGuess.textContent = guess;
+                incorrectGuessesDiv.appendChild(incorrectGuess);
             }
         });
     </script>
