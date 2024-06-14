@@ -66,7 +66,7 @@
 
         #suggestions {
             position: absolute;
-            top: 100%;
+            top: calc(100%+10px);
             left: 0;
             width: 100%;
             max-width: 300px;
@@ -92,7 +92,6 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            width: 100%;
         }
 
         .suggestion-item:hover {
@@ -111,8 +110,7 @@
     <h1>Devine la Chanson</h1>
     <div id="lyrics"></div>
     <form id="guessForm">
-        <input type="text" id="guess" name="guess" list="titles" placeholder="Entrez le titre de la chanson">
-        <datalist id="titles"></datalist>
+        <input type="text" id="guess" name="guess" list="titles" placeholder="Entrez le titre de la chanson" autocomplete="off">
         <div id="suggestions"></div>
         <input type="submit" value="Soumettre">
     </form>
