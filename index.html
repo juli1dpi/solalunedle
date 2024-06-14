@@ -870,14 +870,6 @@
             
         };
         // Remplir les suggestions dynamiquement
-    const datalist = document.getElementById('titles');
-        for (const key in chansons) {
-            if (chansons.hasOwnProperty(key)) {
-                const option = document.createElement('option');
-                option.value = chansons[key].title;
-                datalist.appendChild(option);
-            }
-        }
 
         // Fonction pour afficher les suggestions avec les images de couverture
         document.getElementById('guess').addEventListener('input', function () {
