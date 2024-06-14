@@ -892,17 +892,6 @@
         };
         // Remplir les suggestions dynamiquement
 
-        // Fonction pour afficher les suggestions avec les images de couverture
-        const datalist = document.getElementById('titles');
-        for (const key in chansons) {
-            if (chansons.hasOwnProperty(key)) {
-                const option = document.createElement('option');
-                option.value = chansons[key].title;
-                datalist.appendChild(option);
-            }
-        }
-
-        // Fonction pour afficher les suggestions avec les images de couverture
         document.getElementById('guess').addEventListener('input', function () {
             const inputValue = this.value.trim().toLowerCase();
             const suggestionsDiv = document.getElementById('suggestions');
@@ -946,7 +935,6 @@
             event.preventDefault();
             const guess = document.getElementById('guess').value.trim();
             let correct = false;
-            const lyricsDiv = document.getElementById('lyrics');
             const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title;
 
             if (guess === lyricsTitle) {
