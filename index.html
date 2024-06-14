@@ -34,6 +34,7 @@
         }
 
         #guessForm {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -65,7 +66,8 @@
 
         #suggestions {
             position: absolute;
-            top: 50px;
+            top: 100px;
+            left: 0%;
             width: 100%;
             max-width: 300px;
             border: 1px solid #ccc;
@@ -76,13 +78,31 @@
             z-index: 1;
         }
 
+        .suggestion-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap; /* Permettre le retour à la ligne */
+            justify-content: flex-start; /* Aligner les suggestions à gauche */
+        }
+
         .suggestion-item {
             padding: 10px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
         }
 
         .suggestion-item:hover {
             background-color: #f0f0f0;
+        }
+        
+        .suggestion-item img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -875,17 +895,21 @@
             song.title.toLowerCase().includes(inputValue)
         );
 
+        const suggestionList = document.createElement('ul');
+        suggestionList.classList.add('suggestion-list');
+
         matches.forEach(song => {
-            const suggestion = document.createElement('div');
-            suggestion.classList.add('suggestion-item');
-            suggestion.innerHTML = `<img src="${song.cover}" alt="${song.title}"> ${song.title}`;
-            suggestion.addEventListener('click', function () {
+            const suggestionItem = document.createElement('li');
+            suggestionItem.classList.add('suggestion-item');
+            suggestionItem.innerHTML = `<img src="${song.cover}" alt="${song.title}"> ${song.title}`;
+            suggestionItem.addEventListener('click', function () {
                 document.getElementById('guess').value = song.title;
                 suggestionsDiv.style.display = 'none';
             });
             suggestionsDiv.appendChild(suggestion);
         });
 
+        suggestionsDiv.appendChild(suggestionList);
         suggestionsDiv.style.display = 'block';
     });
 
