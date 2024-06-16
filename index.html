@@ -945,7 +945,7 @@
                 const suggestionsDiv = document.getElementById('suggestions');
                 const suggestions = suggestionsDiv.querySelectorAll('.suggestion-item');
                 suggestions.forEach(suggestion => {
-                    if (suggestion.textContent.trim() === guess) {
+                    if (suggestion.textContent.trim().toLowerCase().includes(guess.toLowerCase())) {
                         suggestion.remove();
                     }
                 });
