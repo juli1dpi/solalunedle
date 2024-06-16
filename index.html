@@ -945,12 +945,23 @@
 
         // Ajouter la logique de soumission du formulaire
         document.getElementById('guessForm').addEventListener('submit', function (event) {
-            event.preventDefault();
+            event.preventDefault(); // Empêcher le formulaire de se soumettre normalement
+
             const guess = document.getElementById('guess').value.trim();
             const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title;
 
-            if (guess === lyricsTitle) { // Comparaison exacte
+            if (guess === lyricsTitle) {
                 document.getElementById('guess').value = ''; // Effacer la réponse soumise
+
+                // Afficher une nouvelle chanson aléatoire
+                const keys = Object.keys(chansons);
+                const randomKey = keys[Math.floor(Math.random() * keys.length)];
+                lyricsDiv.textContent = chansons[randomKey].parole;
+
+                // Vider et cacher la liste de suggestions
+                const suggestionsDiv = document.getElementById('suggestions');
+                suggestionsDiv.innerHTML = '';
+                suggestionsDiv.style.display = 'none';
             } else {
                 // Ajouter le titre incorrect à la liste des titres incorrects
                 if (!incorrectTitles.includes(guess)) {
@@ -969,6 +980,11 @@
             }
 
             // Mettre à jour la liste des suggestions après soumission
+            updateSuggestions();
+        });
+
+        // Fonction pour mettre à jour la liste des suggestions
+        function updateSuggestions() {
             const inputValue = document.getElementById('guess').value.trim().toLowerCase();
             const suggestionsDiv = document.getElementById('suggestions');
             suggestionsDiv.innerHTML = '';
@@ -999,4 +1015,3 @@
         });
     </script>
 </body>
-</html>
