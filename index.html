@@ -955,6 +955,36 @@
                 incorrectGuess.textContent = guess; // Utiliser la saisie avec la casse d'origine
                 incorrectGuessesDiv.appendChild(incorrectGuess);
             }
+
+            // Mettre à jour la liste des suggestions après soumission
+            const inputValue = document.getElementById('guess').value.trim().toLowerCase();
+            suggestionsDiv.innerHTML = '';
+
+            if (inputValue.length > 0) {
+                const matches = Object.values(chansons).filter(song =>
+                    song.title.toLowerCase().includes(inputValue)
+                );
+
+                const suggestionList = document.createElement('ul');
+                suggestionList.classList.add('suggestion-list');
+
+                matches.forEach(song => {
+                    const suggestionItem = document.createElement('li');
+                    suggestionItem.classList.add('suggestion-item');
+                    suggestionItem.innerHTML = `<img src="${song.cover}" alt="${song.title}"> ${song.title}`;
+                    suggestionItem.dataset.title = song.title; // Stocker le titre avec la casse d'origine
+                    suggestionItem.addEventListener('click', function () {
+                        document.getElementById('guess').value = song.title;
+                        suggestionsDiv.style.display = 'none';
+                    });
+                    suggestionList.appendChild(suggestionItem);
+                });
+
+                suggestionsDiv.appendChild(suggestionList);
+                suggestionsDiv.style.display = 'block';
+            } else {
+                suggestionsDiv.style.display = 'none';
+            }
         });
     </script>
 </body>
