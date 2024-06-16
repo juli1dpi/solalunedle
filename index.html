@@ -890,7 +890,11 @@
           },
             
         };
-        // Remplir les suggestions dynamiquement
+
+        const lyricsDiv = document.getElementById('lyrics');
+        const keys = Object.keys(chansons);
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        lyricsDiv.textContent = chansons[randomKey].parole;
 
         document.getElementById('guess').addEventListener('input', function () {
             const inputValue = this.value.trim().toLowerCase();
@@ -913,7 +917,7 @@
                 const suggestionItem = document.createElement('li');
                 suggestionItem.classList.add('suggestion-item');
                 suggestionItem.innerHTML = `<img src="${song.cover}" alt="${song.title}"> ${song.title}`;
-                suggestionItem.dataset.title = song.title.toLowerCase();
+                suggestionItem.dataset.title = song.title; // Stocker le titre avec la casse d'origine
                 suggestionItem.addEventListener('click', function () {
                     document.getElementById('guess').value = song.title;
                     suggestionsDiv.style.display = 'none';
@@ -925,28 +929,22 @@
             suggestionsDiv.style.display = 'block';
         });
 
-        // Afficher des paroles aléatoires au chargement
-        const lyricsDiv = document.getElementById('lyrics');
-        const keys = Object.keys(chansons);
-        const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        lyricsDiv.textContent = chansons[randomKey].parole;
-
         // Ajouter la logique de soumission du formulaire
         document.getElementById('guessForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            const guess = document.getElementById('guess').value.trim().toLowerCase();
-            const guessLower = guess.toLowerCase();
-            const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title.toLowerCase();
+            const guess = document.getElementById('guess').value.trim();
+            const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title;
 
-            if (guessLower === lyricsTitle.toLowerCase()) {
+            if (guess === lyricsTitle) { // Comparaison exacte
                 alert('Correct !');
             } else {
-                
+                alert('Incorrect, essayez encore.');
+
                 const suggestionsDiv = document.getElementById('suggestions');
                 const suggestions = suggestionsDiv.querySelectorAll('.suggestion-item');
                 suggestions.forEach(suggestion => {
-                    if (suggestion.dataset.title === guessLower) {
-                        suggestion.remove();
+                    if (suggestion.dataset.title === guess) { // Comparaison exacte avec dataset.title
+                        suggestion.remove(); // Supprimer la suggestion incorrecte
                     }
                 });
 
@@ -954,7 +952,7 @@
                 const incorrectGuessesDiv = document.getElementById('incorrectGuesses');
                 const incorrectGuess = document.createElement('div');
                 incorrectGuess.classList.add('incorrect-guess');
-                incorrectGuess.textContent = guess;
+                incorrectGuess.textContent = guess; // Utiliser la saisie avec la casse d'origine
                 incorrectGuessesDiv.appendChild(incorrectGuess);
             }
         });
