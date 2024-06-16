@@ -904,14 +904,22 @@
         // Liste des titres incorrects
        let incorrectTitles = [];
 
-        // Afficher des paroles aléatoires au chargement
         const lyricsDiv = document.getElementById('lyrics');
-        const keys = Object.keys(chansons);
-        const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        lyricsDiv.textContent = chansons[randomKey].parole;
+        const guessInput = document.getElementById('guess');
+        const guessForm = document.getElementById('guessForm');
+        const incorrectGuessesDiv = document.getElementById('incorrectGuesses');
 
-        // Fonction pour mettre à jour les suggestions
-        function updateSuggestions() {
+        // Affichage aléatoire d'une chanson au chargement
+        function displayRandomLyrics() {
+            const keys = Object.keys(chansons);
+            const randomKey = keys[Math.floor(Math.random() * keys.length)];
+            lyricsDiv.textContent = chansons[randomKey].parole;
+        }
+
+        displayRandomLyrics();
+
+        // Mise à jour des suggestions en fonction de la saisie
+        guessInput.addEventListener('input', function() {
             const inputValue = this.value.trim().toLowerCase();
             const suggestionsDiv = document.getElementById('suggestions');
             suggestionsDiv.innerHTML = '';
@@ -934,7 +942,7 @@
                 suggestionItem.innerHTML = `<img src="${song.cover}" alt="${song.title}"> ${song.title}`;
                 suggestionItem.dataset.title = song.title;
                 suggestionItem.addEventListener('click', function () {
-                    document.getElementById('guess').value = song.title;
+                    guessInput.value = song.title;
                     suggestionsDiv.style.display = 'none';
                 });
                 suggestionList.appendChild(suggestionItem);
@@ -942,66 +950,34 @@
 
             suggestionsDiv.appendChild(suggestionList);
             suggestionsDiv.style.display = 'block';
-        }
+        });
 
-        // Exécuter la fonction updateSuggestions à chaque changement de saisie
-        document.getElementById('guess').addEventListener('input', updateSuggestions);
-
-        // Ajouter la logique de soumission du formulaire
-        document.getElementById('guessForm').addEventListener('submit', function (event) {
+        // Soumission du formulaire
+        guessForm.addEventListener('submit', function(event) {
             event.preventDefault();
-            const guess = document.getElementById('guess').value.trim();
+            const guess = guessInput.value.trim();
             const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title;
 
-            if (guess === lyricsTitle) { // Comparaison exacte
-                document.getElementById('guess').value = ''; // Effacer la réponse soumise
+            if (guess === lyricsTitle) {
+                // Réponse correcte
+                guessInput.value = '';
+                displayRandomLyrics();
             } else {
-                // Ajouter le titre incorrect à la liste des titres incorrects
+                // Réponse incorrecte
                 if (!incorrectTitles.includes(guess)) {
                     incorrectTitles.push(guess);
+                    const incorrectGuess = document.createElement('div');
+                    incorrectGuess.classList.add('incorrect-guess');
+                    incorrectGuess.innerHTML = `
+                        <img src="${chansons[guess].cover}" alt="${chansons[guess].title}">
+                        <span>${guess}</span>
+                    `;
+                    incorrectGuessesDiv.appendChild(incorrectGuess);
                 }
-
-                // Ajouter la suggestion incorrecte à l'historique avec la cover
-                const incorrectGuessesDiv = document.getElementById('incorrectGuesses');
-                const incorrectGuess = document.createElement('div');
-                incorrectGuess.classList.add('incorrect-guess');
-                incorrectGuess.innerHTML = `
-                    <img src="${chansons[guess].cover}" alt="${chansons[guess].title}">
-                    <span>${guess}</span>
-                `;
-                incorrectGuessesDiv.appendChild(incorrectGuess);
             }
 
-            // Mettre à jour la liste des suggestions après soumission
-            const inputValue = document.getElementById('guess').value.trim().toLowerCase();
-            const suggestionsDiv = document.getElementById('suggestions');
-            suggestionsDiv.innerHTML = '';
-
-            if (inputValue.length > 0) {
-                const matches = Object.values(chansons).filter(song =>
-                    song.title.toLowerCase().includes(inputValue) && !incorrectTitles.includes(song.title)
-                );
-
-                const suggestionList = document.createElement('ul');
-                suggestionList.classList.add('suggestion-list');
-
-                matches.forEach(song => {
-                    const suggestionItem = document.createElement('li');
-                    suggestionItem.classList.add('suggestion-item');
-                    suggestionItem.innerHTML = `<img src="${song.cover}" alt="${song.title}"> ${song.title}`;
-                    suggestionItem.dataset.title = song.title;
-                    suggestionItem.addEventListener('click', function () {
-                        document.getElementById('guess').value = song.title;
-                        suggestionsDiv.style.display = 'none';
-                    });
-                    suggestionList.appendChild(suggestionItem);
-                });
-
-                suggestionsDiv.appendChild(suggestionList);
-                suggestionsDiv.style.display = 'block';
-            } else {
-                suggestionsDiv.style.display = 'none';
-            }
+            // Réinitialisation des suggestions
+            document.getElementById('suggestions').style.display = 'none';
         });
 
     </script>
