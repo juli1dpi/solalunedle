@@ -913,6 +913,7 @@
                 const suggestionItem = document.createElement('li');
                 suggestionItem.classList.add('suggestion-item');
                 suggestionItem.innerHTML = `<img src="${song.cover}" alt="${song.title}"> ${song.title}`;
+                suggestionItem.dataset.title = song.title.toLowerCase();
                 suggestionItem.addEventListener('click', function () {
                     document.getElementById('guess').value = song.title;
                     suggestionsDiv.style.display = 'none';
@@ -933,19 +934,17 @@
         // Ajouter la logique de soumission du formulaire
         document.getElementById('guessForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            const guess = document.getElementById('guess').value.trim();
-            let correct = false;
-            const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title;
+            const guess = document.getElementById('guess').value.trim().toLowerCase();
+            const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title.toLowerCase();
 
             if (guess === lyricsTitle) {
                 alert('Correct !');
-                correct = true;
             } else {
                 alert('Incorrect, essayez encore.');
                 const suggestionsDiv = document.getElementById('suggestions');
                 const suggestions = suggestionsDiv.querySelectorAll('.suggestion-item');
                 suggestions.forEach(suggestion => {
-                    if (suggestion.dataset.title === guess) { // Comparer en utilisant dataset.title
+                    if (suggestion.dataset.title === guess) {
                         suggestion.remove();
                     }
                 });
