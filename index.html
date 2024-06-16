@@ -935,16 +935,17 @@
         document.getElementById('guessForm').addEventListener('submit', function (event) {
             event.preventDefault();
             const guess = document.getElementById('guess').value.trim().toLowerCase();
+            const guessLower = guess.toLowerCase();
             const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title.toLowerCase();
 
-            if (guess === lyricsTitle) {
+            if (guessLower === lyricsTitle.toLowerCase()) {
                 alert('Correct !');
             } else {
-                alert('Incorrect, essayez encore.');
+                
                 const suggestionsDiv = document.getElementById('suggestions');
                 const suggestions = suggestionsDiv.querySelectorAll('.suggestion-item');
                 suggestions.forEach(suggestion => {
-                    if (suggestion.dataset.title === guess) {
+                    if (suggestion.dataset.title === guessLower) {
                         suggestion.remove();
                     }
                 });
