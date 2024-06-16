@@ -133,7 +133,6 @@
             border-radius: 50%;
             margin-right: 10px;
         }
-        
     </style>
 </head>
 <body>
@@ -902,6 +901,7 @@
         };
 
         // Liste des titres incorrects
+        // Liste des titres incorrects
         let incorrectTitles = [];
 
         // Afficher des paroles aléatoires au chargement
@@ -951,22 +951,23 @@
 
             if (guess === lyricsTitle) { // Comparaison exacte
                 alert('Correct !');
-                document.getElementById('guess').value = ''; //
+                document.getElementById('guess').value = ''; // Effacer la réponse soumise
             } else {
+                alert('Incorrect, essayez encore.');
+
                 // Ajouter le titre incorrect à la liste des titres incorrects
                 if (!incorrectTitles.includes(guess)) {
                     incorrectTitles.push(guess);
                 }
 
-                // Ajouter la suggestion incorrecte à l'historique
+                // Ajouter la suggestion incorrecte à l'historique avec la cover
                 const incorrectGuessesDiv = document.getElementById('incorrectGuesses');
                 const incorrectGuess = document.createElement('div');
                 incorrectGuess.classList.add('incorrect-guess');
-                 incorrectGuess.innerHTML = `
+                incorrectGuess.innerHTML = `
                     <img src="${chansons[guess].cover}" alt="${chansons[guess].title}">
                     <span>${guess}</span>
                 `;
-                incorrectGuess.textContent = guess; // Utiliser la saisie avec la casse d'origine
                 incorrectGuessesDiv.appendChild(incorrectGuess);
             }
 
@@ -987,7 +988,7 @@
                     const suggestionItem = document.createElement('li');
                     suggestionItem.classList.add('suggestion-item');
                     suggestionItem.innerHTML = `<img src="${song.cover}" alt="${song.title}"> ${song.title}`;
-                    suggestionItem.dataset.title = song.title; // Stocker le titre avec la casse d'origine
+                    suggestionItem.dataset.title = song.title;
                     suggestionItem.addEventListener('click', function () {
                         document.getElementById('guess').value = song.title;
                         suggestionsDiv.style.display = 'none';
@@ -997,8 +998,6 @@
 
                 suggestionsDiv.appendChild(suggestionList);
                 suggestionsDiv.style.display = 'block';
-            } else {
-                suggestionsDiv.style.display = 'none';
             }
         });
     </script>
