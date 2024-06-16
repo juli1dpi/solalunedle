@@ -144,8 +144,6 @@
         <input type="submit" value="Soumettre">
     </form>
     <div id="incorrectGuesses"></div>
-
-    <script>
         const chansons = {
             "chanson1": {
                 "title": "Fissure de vie 23",
@@ -902,7 +900,7 @@
 
         // Liste des titres incorrects
         // Liste des titres incorrects
-        let incorrectTitles = [];
+       let incorrectTitles = [];
 
         // Afficher des paroles aléatoires au chargement
         const lyricsDiv = document.getElementById('lyrics');
@@ -950,11 +948,8 @@
             const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title;
 
             if (guess === lyricsTitle) { // Comparaison exacte
-                alert('Correct !');
                 document.getElementById('guess').value = ''; // Effacer la réponse soumise
             } else {
-                alert('Incorrect, essayez encore.');
-
                 // Ajouter le titre incorrect à la liste des titres incorrects
                 if (!incorrectTitles.includes(guess)) {
                     incorrectTitles.push(guess);
