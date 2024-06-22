@@ -28,6 +28,7 @@
             min-width: 100%;
             min-height: 100%;
             z-index: -1; /* Assure que la vidéo est en arrière-plan */
+            object-fit: cover;
         }
 
         #lyrics {
@@ -199,7 +200,7 @@
     </style>
 </head>
 <body>
-    <video id="background-video" autoplay muted loop>
+    <video id="background-video" autoplay muted loop width="1920" height="1080">
         <source src="SO.mp4" type="video/mp4">
         <!-- Ajoutez des sources supplémentaires pour d'autres formats -->
         Your browser does not support the video tag.
