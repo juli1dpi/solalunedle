@@ -1224,6 +1224,7 @@ guessForm.addEventListener('submit', function(event) {
     } else {
         // Réponse incorrecte
          if (!incorrectTitles.includes(guess)) {
+            guessInput.value = '';
             incorrectTitles.push(guess);
             const incorrectGuessDiv = document.createElement('div');
             incorrectGuessDiv.classList.add('incorrect-guess');
