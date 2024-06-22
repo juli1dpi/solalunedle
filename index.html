@@ -208,7 +208,7 @@
     <div id="joker1-info" class="joker-info">Joker 1 : Oui</div>
     <div id="joker2-info" class="joker-info">
         Joker 2 :
-        <img src="" alt="">
+        <img id="joker2-image" src="" alt="">
     </div>
 
     <script>
@@ -1122,7 +1122,6 @@
         let currentSong = {};
         let incorrectCount = 0;
 
-        // Éléments HTML
         const lyricsDiv = document.getElementById('lyrics');
         const guessInput = document.getElementById('guess');
         const guessForm = document.getElementById('guessForm');
@@ -1131,6 +1130,30 @@
         const joker2Button = document.getElementById('joker2');
         const joker1Info = document.getElementById('joker1-info');
         const joker2Info = document.getElementById('joker2-info');
+        const joker2Button = document.getElementById('joker2');
+        const joker2Info = document.getElementById('joker2-info');
+        const joker2Image = document.getElementById('joker2-image'); // Ajouté pour référencer l'image du Joker 2
+
+        // Fonction pour activer le Joker 2
+        function activateJoker2() {
+            joker2Info.style.display = 'block'; // Affiche la boîte d'info du Joker 2
+
+            // Affiche l'image du Joker 2 dans la boîte d'info
+            joker2Image.src = currentSong.joker2Image; // Utilisation de l'URL de l'image du Joker 2 depuis les données de la chanson
+            joker2Image.alt = currentSong.title; // Définit l'attribut alt de l'image
+
+            // Ajuste la taille de l'image du Joker 2 si nécessaire
+            joker2Image.style.maxWidth = '100%'; // Ajustement de la largeur maximale de l'image
+
+            // Désactive le bouton du Joker 2 après utilisation
+            joker2Button.disabled = true;
+            joker2Button.classList.remove('active');
+        }
+
+        // Événement pour le bouton Joker 2
+        joker2Button.addEventListener('click', function() {
+            activateJoker2();
+        });
 
         // Fonction pour afficher des paroles aléatoires
         function displayRandomLyrics() {
@@ -1192,37 +1215,29 @@
                 joker1Button.disabled = true;
                 joker1Button.classList.remove('active');
                 joker1Button.innerHTML = 'Joker 1';
-        function activateJoker2() {
-    joker2Info.style.display = 'block'; // Affiche la boîte d'info du Joker 2
 
-    // Affiche l'image du Joker 2 dans la boîte d'info
-    const joker2Image = document.createElement('img');
-    joker2Image.src = currentSong.joker2Image; // Supposons que vous avez un champ joker2Image dans vos données de chanson
-    joker2Image.alt = currentSong.title;
-    joker2Info.innerHTML = 'Joker 2 : ';
-    joker2Info.appendChild(joker2Image);
+                // Activer le Joker 2 après la réponse correcte (à ajuster selon la logique souhaitée)
+                if (currentSong.joker2Image) {
+                    activateJoker2();
+                }
+            } else {
+                // Réponse incorrecte
+                if (!incorrectTitles.includes(guess)) {
+                    incorrectTitles.push(guess);
+                    const incorrectGuessDiv = document.createElement('div');
+                    incorrectGuessDiv.classList.add('incorrect-guess');
+                    incorrectGuessDiv.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}"> ${guess}`;
+                    incorrectGuessesDiv.appendChild(incorrectGuessDiv);
+                }
+                incorrectCount++;
+            }
+        });
 
-    // Ajuste la taille de l'image du Joker 2 si nécessaire
-    joker2Image.style.maxWidth = '100%'; // Ajustez selon vos besoins
-
-    // Désactive le bouton du Joker 2 après utilisation
-    joker2Button.disabled = true;
-    joker2Button.classList.remove('active');
-}
-
-// Événement pour le bouton Joker 2
-joker2Button.addEventListener('click', function() {
-    activateJoker2();
-});
-
-// Initialisation : Affiche une chanson aléatoire au chargement de la page
-window.addEventListener('load', function() {
-    displayRandomLyrics();
-});
+        // Initialisation : Affiche une chanson aléatoire au chargement de la page
+        window.addEventListener('load', function() {
+            displayRandomLyrics();
+        });
     </script>
 </body>
 </html>
-
-
-
 
