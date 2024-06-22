@@ -1208,7 +1208,7 @@ guessForm.addEventListener('submit', function(event) {
         incorrectTitles = [];
         incorrectCount = 0;
         incorrectGuessesDiv.innerHTML = '';
-       joker1Info.style.display = 'none';
+        joker1Info.style.display = 'none';
         joker2Info.style.display = 'none';
         joker1Button.disabled = true; // Désactive le bouton Joker 1 après utilisation
         joker1Button.classList.remove('active');
@@ -1223,11 +1223,11 @@ guessForm.addEventListener('submit', function(event) {
         displayRandomLyrics();
     } else {
         // Réponse incorrecte
-         if (!incorrectTitles.includes(guess)) {
+        if (!incorrectTitles.includes(guess)) {
             incorrectTitles.push(guess);
+            const matchedSong = Object.values(chansons).find(song => song.title.toLowerCase() === guess.toLowerCase());
             const incorrectGuessDiv = document.createElement('div');
             incorrectGuessDiv.classList.add('incorrect-guess');
-            const matchedSong = Object.values(chansons).find(song => song.title.toLowerCase() === guess.toLowerCase());
             if (matchedSong) {
                 incorrectGuessDiv.innerHTML = `<img src="${matchedSong.cover}" alt="${matchedSong.title}"> ${guess}`;
             } else {
@@ -1236,8 +1236,9 @@ guessForm.addEventListener('submit', function(event) {
             incorrectGuessesDiv.appendChild(incorrectGuessDiv);
         }
         incorrectCount++;
-    }
-    if (incorrectCount === 3) {
+
+        // Vérification des seuils pour activer les jokers
+        if (incorrectCount === 3) {
             joker1Button.disabled = false; // Active le bouton Joker 1
         }
 
@@ -1245,6 +1246,7 @@ guessForm.addEventListener('submit', function(event) {
             joker2Button.disabled = false; // Active le bouton Joker 2
         }
     }
+});
 
 // Initialisation : Affiche une chanson aléatoire au chargement de la page
 window.addEventListener('load', function() {
