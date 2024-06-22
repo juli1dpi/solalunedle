@@ -1167,17 +1167,21 @@ guessForm.addEventListener('submit', function(event) {
 
                 // Activer le premier joker après 3 erreurs
                 if (incorrectCount === 3) {
+                    console.log('Activation du premier joker');
                     joker1Button.disabled = false;
                     joker1Button.classList.add('active');
+                    joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
                 }
-
+                
                 // Activer le deuxième joker après 5 erreurs
                 if (incorrectCount === 5) {
+                    console.log('Activation du deuxième joker');
                     joker2Button.disabled = false;
                     joker2Button.classList.add('active');
+                    joker2Button.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}">`;
                 }
-            }
-        }
+                            }
+                        }
 
         // Effacer la réponse soumise
         guessInput.value = '';
