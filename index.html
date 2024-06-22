@@ -1083,6 +1083,8 @@ const guessForm = document.getElementById('guessForm');
 const incorrectGuessesDiv = document.getElementById('incorrectGuesses');
 const joker1Button = document.getElementById('joker1');
 const joker2Button = document.getElementById('joker2');
+const joker1Info = document.getElementById('joker1-info');
+const joker2Info = document.getElementById('joker2-info');
 
 // Afficher des paroles aléatoires au chargement de la page
 function displayRandomLyrics() {
@@ -1139,6 +1141,8 @@ guessForm.addEventListener('submit', function(event) {
         incorrectTitles = [];
         incorrectCount = 0;
         incorrectGuessesDiv.innerHTML = '';
+        joker1Info.style.display = 'none';
+        joker2Info.style.display = 'none';
         joker1Button.disabled = true;
         joker1Button.classList.remove('active');
         joker1Button.innerHTML = 'Joker 1';
@@ -1165,18 +1169,12 @@ guessForm.addEventListener('submit', function(event) {
                 if (incorrectCount === 3) {
                     joker1Button.disabled = false;
                     joker1Button.classList.add('active');
-                    joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
                 }
 
                 // Activer le deuxième joker après 5 erreurs
                 if (incorrectCount === 5) {
                     joker2Button.disabled = false;
                     joker2Button.classList.add('active');
-                    const joker2Image = document.createElement('img');
-                    joker2Image.src = incorrectSong.cover;
-                    joker2Image.alt = incorrectSong.title;
-                    joker2Button.innerHTML = '';
-                    joker2Button.appendChild(joker2Image);
                 }
             }
         }
@@ -1189,26 +1187,14 @@ guessForm.addEventListener('submit', function(event) {
 // Logique pour le joker 1
 joker1Button.addEventListener('click', function() {
     if (!joker1Button.disabled) {
-        const featText = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
-        alert(`La chanson est un featuring : ${featText}`);
+        joker1Info.style.display = 'block';
     }
 });
 
 // Logique pour le joker 2
 joker2Button.addEventListener('click', function() {
     if (!joker2Button.disabled) {
-        const incorrectGuessElements = incorrectGuessesDiv.querySelectorAll('.incorrect-guess');
-        if (incorrectGuessElements.length > 0) {
-            const lastIncorrectGuess = incorrectGuessElements[incorrectGuessElements.length - 1];
-            const imageElement = lastIncorrectGuess.querySelector('img');
-            if (imageElement) {
-                joker2Button.innerHTML = '';
-                const joker2Image = document.createElement('img');
-                joker2Image.src = imageElement.src;
-                joker2Image.alt = imageElement.alt;
-                joker2Button.appendChild(joker2Image);
-            }
-        }
+        joker2Info.style.display = 'block';
     }
 });
 
