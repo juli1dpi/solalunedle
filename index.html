@@ -112,6 +112,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            max-height: 200px; /* Limite la hauteur de la zone des réponses incorrectes */
+            overflow-y: auto; /* Ajoute une barre de défilement si nécessaire */
         }
 
         .incorrect-guess {
@@ -990,4 +992,3 @@
         });
     </script>
 </body>
-</html>
