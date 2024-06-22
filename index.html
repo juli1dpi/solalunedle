@@ -1144,33 +1144,34 @@
                 joker2Button.disabled = true;
                 joker2Button.classList.remove('active');
                 displayRandomLyrics();
-            } else {
+            } 
+    else {
     // Réponse incorrecte
-    if (!incorrectTitles.includes(guess)) {
-        incorrectTitles.push(guess);
-        incorrectCount++;
-        const incorrectGuess = document.createElement('div');
-        incorrectGuess.classList.add('incorrect-guess');
-        incorrectGuess.innerHTML = `
-            <img src="${currentSong.cover}" alt="${currentSong.title}">
-            <span>${guess}</span>
-        `;
-        incorrectGuessesDiv.appendChild(incorrectGuess);
-
-        // Activer le premier joker après 3 erreurs
-        if (incorrectCount === 3) {
-            joker1Button.disabled = false;
-            joker1Button.classList.add('active');
-            joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
-        }
-
-        // Activer le deuxième joker après 5 erreurs
-        if (incorrectCount === 5) {
-            joker2Button.disabled = false;
-            joker2Button.classList.add('active');
-            joker2Button.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}">`;
-        }
-    }
+            if (!incorrectTitles.includes(guess)) {
+                incorrectTitles.push(guess);
+                incorrectCount++;
+                const incorrectGuess = document.createElement('div');
+                incorrectGuess.classList.add('incorrect-guess');
+                incorrectGuess.innerHTML = `
+                    <img src="${currentSong.cover}" alt="${currentSong.title}">
+                    <span>${guess}</span>
+                `;
+                incorrectGuessesDiv.appendChild(incorrectGuess);
+        
+                // Activer le premier joker après 3 erreurs
+                if (incorrectCount === 3) {
+                    joker1Button.disabled = false;
+                    joker1Button.classList.add('active');
+                    joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
+                }
+        
+                // Activer le deuxième joker après 5 erreurs
+                if (incorrectCount === 5) {
+                    joker2Button.disabled = false;
+                    joker2Button.classList.add('active');
+                    joker2Button.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}">`;
+                }
+            }
 
     // Effacer la réponse soumise
     document.getElementById('guess').value = '';
