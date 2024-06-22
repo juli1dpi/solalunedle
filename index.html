@@ -1247,6 +1247,7 @@ guessForm.addEventListener('submit', function(event) {
         // Réponse incorrecte
         if (!incorrectTitles.includes(guess)) {
             incorrectTitles.push(guess);
+            guessInput.value = '';
             const matchedSong = Object.values(chansons).find(song => song.title.toLowerCase() === guess.toLowerCase());
             const incorrectGuessDiv = document.createElement('div');
             incorrectGuessDiv.classList.add('incorrect-guess');
