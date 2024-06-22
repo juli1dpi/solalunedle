@@ -1083,13 +1083,11 @@
         const joker1Button = document.getElementById('joker1');
         const joker2Button = document.getElementById('joker2');
 
-        // Affichage aléatoire d'une chanson au chargement
-        function displayRandomLyrics() {
-            const keys = Object.keys(chansons);
-            const randomKey = keys[Math.floor(Math.random() * keys.length)];
-            currentSong = chansons[randomKey];
-            lyricsDiv.textContent = currentSong.parole;
-        }
+        // Afficher des paroles aléatoires au chargement
+const lyricsDiv = document.getElementById('lyrics');
+const keys = Object.keys(chansons);
+const randomKey = keys[Math.floor(Math.random() * keys.length)];
+lyricsDiv.textContent = chansons[randomKey].parole;
 
         displayRandomLyrics();
 
