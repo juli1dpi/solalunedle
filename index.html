@@ -134,32 +134,56 @@
             margin-right: 10px;
         }
 
+        .joker {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
         .joker-button {
             padding: 10px 20px;
             font-size: 18px;
             color: white;
-            background-color: #6c757d;        
+            background-color: #6c757d;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
-            width: 150px;
-            text-align: center;
+            margin: 0 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
         }
 
         .joker-button:hover {
             background-color: #5a6268;
         }
 
-        .active {
-            background-color: #28a745 !important;
+        .joker-button.active {
+            background-color: #28a745;
+        }
+
+        .joker-button img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
         }
 
         .joker-info {
             display: none;
-            margin-top: 10px;
-            width: 200px;
-            text-align: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
         }
     </style>
 </head>
@@ -172,10 +196,15 @@
         <input type="submit" value="Soumettre">
     </form>
     <div id="incorrectGuesses"></div>
-    <button id="joker1" class="joker-button" disabled>Joker 1</button>
-    <button id="joker2" class="joker-button" disabled>Joker 2</button>
-    <div id="joker1-info" class="joker-info">Joker 1 utilisé</div>
-    <div id="joker2-info" class="joker-info">Joker 2 utilisé</div>
+    <div class="joker">
+        <button id="joker1" class="joker-button" disabled>Joker 1</button>
+        <button id="joker2" class="joker-button" disabled>Joker 2</button>
+    </div>
+    <div id="joker1-info" class="joker-info">Joker 1 : Oui</div>
+    <div id="joker2-info" class="joker-info">
+        Joker 2 :
+        <img src="" alt="">
+    </div>
 
     <script>
         const chansons = {
@@ -1088,8 +1117,6 @@
 let incorrectTitles = [];
         let currentSong = {};
         let incorrectCount = 0;
-        let joker1Used = false;
-        let joker2Used = false;
 
         const lyricsDiv = document.getElementById('lyrics');
         const guessInput = document.getElementById('guess');
@@ -1109,7 +1136,7 @@ let incorrectTitles = [];
             lyricsDiv.textContent = randomSong.parole;
         }
 
-        // Mise à jour des suggestions en fonction de la saisie
+        // Écouteur d'événement pour la saisie utilisateur
         guessInput.addEventListener('input', function() {
             const inputValue = this.value.trim().toLowerCase();
             const suggestionsDiv = document.getElementById('suggestions');
@@ -1159,8 +1186,10 @@ let incorrectTitles = [];
                 joker2Info.style.display = 'none';
                 joker1Button.disabled = true;
                 joker1Button.classList.remove('active');
+                joker1Button.innerHTML = 'Joker 1';
                 joker2Button.disabled = true;
                 joker2Button.classList.remove('active');
+                joker2Button.innerHTML = 'Joker 2';
                 displayRandomLyrics();
             } else {
                 // Réponse incorrecte
@@ -1179,16 +1208,18 @@ let incorrectTitles = [];
 
                         // Activer le premier joker après 3 erreurs
                         if (incorrectCount === 3) {
+                            console.log('Activation du premier joker');
                             joker1Button.disabled = false;
                             joker1Button.classList.add('active');
-                            joker1Button.addEventListener('click', handleJoker1);
+                            joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
                         }
                         
                         // Activer le deuxième joker après 5 erreurs
                         if (incorrectCount === 5) {
+                            console.log('Activation du deuxième joker');
                             joker2Button.disabled = false;
                             joker2Button.classList.add('active');
-                            joker2Button.addEventListener('click', handleJoker2);
+                            joker2Button.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}">`;
                         }
                     }
                 }
@@ -1198,32 +1229,28 @@ let incorrectTitles = [];
             }
         });
 
-        // Fonction pour gérer l'utilisation du joker 1
-        function handleJoker1() {
-            if (!joker1Used) {
-                joker1Used = true;
+        // Événement pour le joker 1
+        joker1Button.addEventListener('click', function() {
+            if (!joker1Button.disabled) {
                 joker1Info.style.display = 'block';
                 joker1Button.disabled = true;
-                joker1Button.classList.remove('active');
-                joker1Button.removeEventListener('click', handleJoker1);
-                joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
             }
-        }
+        });
 
-        // Fonction pour gérer l'utilisation du joker 2
-        function handleJoker2() {
-            if (!joker2Used) {
-                joker2Used = true;
+        // Événement pour le joker 2
+        joker2Button.addEventListener('click', function() {
+            if (!joker2Button.disabled) {
                 joker2Info.style.display = 'block';
                 joker2Button.disabled = true;
-                joker2Button.classList.remove('active');
-                joker2Button.removeEventListener('click', handleJoker2);
-                joker2Button.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}">`;
             }
-        }
+        });
 
         // Initialiser l'affichage des paroles au chargement de la page
         displayRandomLyrics();
     </script>
 </body>
 </html>
+
+
+
+
