@@ -26,9 +26,10 @@
             top: 2;
             left: 0;
             min-width: 100%;
-            min-height: 100%;
+            min-height: auto;
             z-index: -1; /* Assure que la vidéo est en arrière-plan */
-            object-fit: cover;
+            transform: scale(1.2); /* Facteur de zoom */
+            transform-origin: 0 0; /* Point d'origine du zoom (coin supérieur gauche) */
         }
 
         #lyrics {
