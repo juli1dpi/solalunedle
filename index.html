@@ -1208,9 +1208,9 @@ guessForm.addEventListener('submit', function(event) {
         incorrectTitles = [];
         incorrectCount = 0;
         incorrectGuessesDiv.innerHTML = '';
-        joker1Info.style.display = 'none';
+       joker1Info.style.display = 'none';
         joker2Info.style.display = 'none';
-        joker1Button.disabled = false; // Réactive le bouton Joker 1
+        joker1Button.disabled = true; // Désactive le bouton Joker 1 après utilisation
         joker1Button.classList.remove('active');
         joker1Button.innerHTML = 'Joker 1';
 
@@ -1224,7 +1224,6 @@ guessForm.addEventListener('submit', function(event) {
     } else {
         // Réponse incorrecte
          if (!incorrectTitles.includes(guess)) {
-            guessInput.value = '';
             incorrectTitles.push(guess);
             const incorrectGuessDiv = document.createElement('div');
             incorrectGuessDiv.classList.add('incorrect-guess');
@@ -1238,7 +1237,14 @@ guessForm.addEventListener('submit', function(event) {
         }
         incorrectCount++;
     }
-});
+    if (incorrectCount === 3) {
+            joker1Button.disabled = false; // Active le bouton Joker 1
+        }
+
+        if (incorrectCount === 5) {
+            joker2Button.disabled = false; // Active le bouton Joker 2
+        }
+    }
 
 // Initialisation : Affiche une chanson aléatoire au chargement de la page
 window.addEventListener('load', function() {
