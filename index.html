@@ -1111,7 +1111,7 @@
             
         };
 
-        // Liste des titres incorrects
+// Liste des titres incorrects
 let incorrectTitles = [];
 let currentSong = {};
 let incorrectCount = 0;
@@ -1125,7 +1125,6 @@ const joker1Button = document.getElementById('joker1');
 const joker2Button = document.getElementById('joker2');
 const joker1Info = document.getElementById('joker1-info');
 const joker2Info = document.getElementById('joker2-info');
-const orderSelect = document.getElementById('orderSelect');
 
 // Fonction pour afficher des paroles aléatoires
 function displayRandomLyrics() {
@@ -1204,7 +1203,7 @@ guessForm.addEventListener('submit', function(event) {
                     <img src="${incorrectSong.cover}" alt="${incorrectSong.title}">
                     <span>${guess}</span>
                 `;
-                incorrectGuessesDiv.appendChild(incorrectGuess);
+                incorrectGuessesDiv.prepend(incorrectGuess); // Ajout au début pour afficher du plus récent au plus ancien
 
                 // Activer le premier joker après 3 erreurs
                 if (incorrectCount === 3) {
@@ -1240,45 +1239,6 @@ joker1Button.addEventListener('click', function() {
 joker2Button.addEventListener('click', function() {
     if (!joker2Button.disabled) {
         joker2Info.style.display = 'block';
-    }
-});
-
-// Événement pour changer l'ordre d'affichage des titres incorrects
-orderSelect.addEventListener('change', function() {
-    const selectedOrder = orderSelect.value;
-
-    // Vider la liste actuelle des titres incorrects
-    incorrectGuessesDiv.innerHTML = '';
-
-    // Réorganiser les titres incorrects en fonction de l'option sélectionnée
-    if (selectedOrder === 'recent') {
-        // Afficher du plus récent au plus ancien
-        incorrectTitles.slice().reverse().forEach(title => {
-            const incorrectSong = Object.values(chansons).find(song => song.title.toLowerCase() === title.toLowerCase());
-            if (incorrectSong) {
-                const incorrectGuess = document.createElement('div');
-                incorrectGuess.classList.add('incorrect-guess');
-                incorrectGuess.innerHTML = `
-                    <img src="${incorrectSong.cover}" alt="${incorrectSong.title}">
-                    <span>${title}</span>
-                `;
-                incorrectGuessesDiv.appendChild(incorrectGuess);
-            }
-        });
-    } else if (selectedOrder === 'oldest') {
-        // Afficher du plus ancien au plus récent (ordre original)
-        incorrectTitles.forEach(title => {
-            const incorrectSong = Object.values(chansons).find(song => song.title.toLowerCase() === title.toLowerCase());
-            if (incorrectSong) {
-                const incorrectGuess = document.createElement('div');
-                incorrectGuess.classList.add('incorrect-guess');
-                incorrectGuess.innerHTML = `
-                    <img src="${incorrectSong.cover}" alt="${incorrectSong.title}">
-                    <span>${title}</span>
-                `;
-                incorrectGuessesDiv.appendChild(incorrectGuess);
-            }
-        });
     }
 });
 
