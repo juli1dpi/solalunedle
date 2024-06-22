@@ -1118,7 +1118,7 @@
 
 // Liste des titres incorrects
         // Liste des titres incorrects
-        let incorrectTitles = [];
+let incorrectTitles = [];
 let currentSong = {};
 let incorrectCount = 0;
 
@@ -1210,7 +1210,7 @@ guessForm.addEventListener('submit', function(event) {
         incorrectGuessesDiv.innerHTML = '';
         joker1Info.style.display = 'none';
         joker2Info.style.display = 'none';
-        joker1Button.disabled = true;
+        joker1Button.disabled = false; // Réactive le bouton Joker 1
         joker1Button.classList.remove('active');
         joker1Button.innerHTML = 'Joker 1';
 
@@ -1218,6 +1218,9 @@ guessForm.addEventListener('submit', function(event) {
         if (currentSong.joker2Image) {
             activateJoker2();
         }
+
+        // Affiche une nouvelle chanson aléatoire après la réponse correcte
+        displayRandomLyrics();
     } else {
         // Réponse incorrecte
         if (!incorrectTitles.includes(guess)) {
