@@ -20,6 +20,15 @@
         h1 {
             margin-bottom: 20px;
         }
+        
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1; /* Assure que la vidéo est en arrière-plan */
+        }
 
         #lyrics {
             background-color: white;
@@ -190,6 +199,12 @@
     </style>
 </head>
 <body>
+    <video id="background-video" autoplay muted loop>
+        <source src="SO.mp4" type="video/mp4">
+        <!-- Ajoutez des sources supplémentaires pour d'autres formats -->
+        Your browser does not support the video tag.
+    </video>
+    
     <h1>Devine la Chanson</h1>
     <div id="lyrics"></div>
     <form id="guessForm">
