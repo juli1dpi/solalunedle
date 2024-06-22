@@ -1172,62 +1172,63 @@ let incorrectTitles = [];
 
         // Soumission du formulaire
         guessForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const guess = guessInput.value.trim();
-            const currentTitle = currentSong.title;
+    event.preventDefault();
+    const guess = guessInput.value.trim();
+    const currentTitle = currentSong.title;
 
-            if (guess.toLowerCase() === currentTitle.toLowerCase()) {
-                // Réponse correcte
-                guessInput.value = '';
-                incorrectTitles = [];
-                incorrectCount = 0;
-                incorrectGuessesDiv.innerHTML = '';
-                joker1Info.style.display = 'none';
-                joker2Info.style.display = 'none';
-                joker1Button.disabled = true;
-                joker1Button.classList.remove('active');
-                joker1Button.innerHTML = 'Joker 1';
-                joker2Button.disabled = true;
-                joker2Button.classList.remove('active');
-                joker2Button.innerHTML = 'Joker 2';
-                displayRandomLyrics();
-            } else {
-                // Réponse incorrecte
-                if (!incorrectTitles.includes(guess)) {
-                    incorrectTitles.push(guess);
-                    incorrectCount++;
-                    const incorrectSong = Object.values(chansons).find(song => song.title.toLowerCase() === guess.toLowerCase());
-                    if (incorrectSong) {
-                        const incorrectGuess = document.createElement('div');
-                        incorrectGuess.classList.add('incorrect-guess');
-                        incorrectGuess.innerHTML = `
-                            <img src="${incorrectSong.cover}" alt="${incorrectSong.title}">
-                            <span>${guess}</span>
-                        `;
-                        incorrectGuessesDiv.appendChild(incorrectGuess);
+    if (guess.toLowerCase() === currentTitle.toLowerCase()) {
+        // Réponse correcte
+        guessInput.value = '';
+        incorrectTitles = [];
+        incorrectCount = 0;
+        incorrectGuessesDiv.innerHTML = '';
+        joker1Info.style.display = 'none';
+        joker2Info.style.display = 'none';
+        joker1Button.disabled = true;
+        joker1Button.classList.remove('active');
+        joker1Button.innerHTML = 'Joker 1';
+        joker2Button.disabled = true;
+        joker2Button.classList.remove('active');
+        joker2Button.innerHTML = 'Joker 2';
+        displayRandomLyrics();
+    } else {
+        // Réponse incorrecte
+        if (!incorrectTitles.includes(guess)) {
+            incorrectTitles.push(guess);
+            incorrectCount++;
+            const incorrectSong = Object.values(chansons).find(song => song.title.toLowerCase() === guess.toLowerCase());
+            if (incorrectSong) {
+                const incorrectGuess = document.createElement('div');
+                incorrectGuess.classList.add('incorrect-guess');
+                incorrectGuess.innerHTML = `
+                    <img src="${incorrectSong.cover}" alt="${incorrectSong.title}">
+                    <span>${guess}</span>
+                `;
+                // Insérer au début de la liste plutôt qu'à la fin
+                incorrectGuessesDiv.insertBefore(incorrectGuess, incorrectGuessesDiv.firstChild);
 
-                        // Activer le premier joker après 3 erreurs
-                        if (incorrectCount === 3) {
-                            console.log('Activation du premier joker');
-                            joker1Button.disabled = false;
-                            joker1Button.classList.add('active');
-                            joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
-                        }
-                        
-                        // Activer le deuxième joker après 5 erreurs
-                        if (incorrectCount === 5) {
-                            console.log('Activation du deuxième joker');
-                            joker2Button.disabled = false;
-                            joker2Button.classList.add('active');
-                            joker2Button.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}">`;
-                        }
-                    }
+                // Activer le premier joker après 3 erreurs
+                if (incorrectCount === 3) {
+                    console.log('Activation du premier joker');
+                    joker1Button.disabled = false;
+                    joker1Button.classList.add('active');
+                    joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
                 }
-
-                // Effacer la réponse soumise
-                guessInput.value = '';
+                
+                // Activer le deuxième joker après 5 erreurs
+                if (incorrectCount === 5) {
+                    console.log('Activation du deuxième joker');
+                    joker2Button.disabled = false;
+                    joker2Button.classList.add('active');
+                    joker2Button.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}">`;
+                }
             }
-        });
+        }
+
+        // Effacer la réponse soumise
+        guessInput.value = '';
+    }
+});
 
         // Événement pour le joker 1
         joker1Button.addEventListener('click', function() {
