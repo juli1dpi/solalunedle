@@ -22,14 +22,13 @@
         }
         
         #background-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            min-width: 100%;
-            min-height: auto;
-            z-index: -1; /* Assure que la vidéo est en arrière-plan */
-            transform: scale(1.2); /* Facteur de zoom */
-            transform-origin: 0 0; /* Point d'origine du zoom (coin supérieur gauche) */
+            position: absolute;
+            top: 50%; /* Positionne au centre verticalement */
+            left: 50%; /* Positionne au centre horizontalement */
+            width: auto; /* Largeur automatique pour maintenir les proportions */
+            height: 120%; /* Augmente la hauteur pour enlever la bande noire */
+            transform: translate(-50%, -50%) scale(1.2); /* Centre la vidéo et applique le zoom */
+            object-fit: cover; /* Couvre toute la zone sans déformer */
         }
 
         #lyrics {
