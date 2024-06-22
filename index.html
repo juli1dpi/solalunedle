@@ -6,15 +6,16 @@
     <title>SolaluneDLE</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
+           margin: 0;
             padding: 0;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            position: relative;
+            font-family: Arial, sans-serif;
         }
 
         h1 {
@@ -29,7 +30,12 @@
             height: 120%; /* Augmente la hauteur pour enlever la bande noire */
             transform: translate(-50%, -50%) scale(1.2); /* Centre la vidéo et applique le zoom */
             object-fit: cover; /* Couvre toute la zone sans déformer */
+            z-index: -1;
+        }
+        .content {
+            position: relative;
             z-index: 1;
+            text-align: center;
         }
 
         #lyrics {
