@@ -1086,16 +1086,16 @@ const joker2Button = document.getElementById('joker2');
 const joker1Info = document.getElementById('joker1-info');
 const joker2Info = document.getElementById('joker2-info');
 
-// Afficher des paroles aléatoires au chargement de la page
+// Fonction pour afficher des paroles aléatoires
 function displayRandomLyrics() {
     const keys = Object.keys(chansons);
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
     const randomSong = chansons[randomKey];
-    currentSong = randomSong; // Mettre à jour la chanson actuelle
+    currentSong = randomSong;
     lyricsDiv.textContent = randomSong.parole;
 }
 
-// Mise à jour des suggestions en fonction de la saisie
+// Écouteur d'événement pour la saisie utilisateur
 guessInput.addEventListener('input', function() {
     const inputValue = this.value.trim().toLowerCase();
     const suggestionsDiv = document.getElementById('suggestions');
@@ -1184,21 +1184,21 @@ guessForm.addEventListener('submit', function(event) {
     }
 });
 
-// Logique pour le joker 1
+// Événement pour le joker 1
 joker1Button.addEventListener('click', function() {
     if (!joker1Button.disabled) {
         joker1Info.style.display = 'block';
     }
 });
 
-// Logique pour le joker 2
+// Événement pour le joker 2
 joker2Button.addEventListener('click', function() {
     if (!joker2Button.disabled) {
         joker2Info.style.display = 'block';
     }
 });
 
-// Fonction pour démarrer l'application
+// Initialiser l'affichage des paroles au chargement de la page
 displayRandomLyrics();
     </script>
 </body>
