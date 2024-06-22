@@ -1121,6 +1121,8 @@
 let incorrectTitles = [];
 let currentSong = {};
 let incorrectCount = 0;
+let joker1Used = false;
+let joker2Used = false;
 
 const lyricsDiv = document.getElementById('lyrics');
 const guessInput = document.getElementById('guess');
@@ -1146,11 +1148,29 @@ function activateJoker2() {
     // Désactive le bouton du Joker 2 après utilisation
     joker2Button.disabled = true;
     joker2Button.classList.remove('active');
+    joker2Used = true; // Marque le joker 2 comme utilisé
 }
 
 // Événement pour le bouton Joker 2
 joker2Button.addEventListener('click', function() {
-    activateJoker2();
+    if (joker2Used) {
+        activateJoker2();
+    }
+});
+
+// Fonction pour activer le Joker 1
+function activateJoker1() {
+    // Votre logique pour le Joker 1 ici
+    joker1Button.disabled = true;
+    joker1Button.classList.remove('active');
+    joker1Used = true; // Marque le joker 1 comme utilisé
+}
+
+// Événement pour le bouton Joker 1
+joker1Button.addEventListener('click', function() {
+    if (joker1Used) {
+        activateJoker1();
+    }
 });
 
 // Fonction pour afficher des paroles aléatoires
@@ -1213,6 +1233,8 @@ guessForm.addEventListener('submit', function(event) {
         joker1Button.disabled = true; // Désactive le bouton Joker 1 après utilisation
         joker1Button.classList.remove('active');
         joker1Button.innerHTML = 'Joker 1';
+        joker1Used = false; // Réinitialise l'état du joker 1
+        joker2Used = false; // Réinitialise l'état du joker 2
 
         // Activer le Joker 2 après la réponse correcte (à ajuster selon la logique souhaitée)
         if (currentSong.joker2Image) {
