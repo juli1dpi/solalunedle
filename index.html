@@ -1117,6 +1117,7 @@
         };
 
 // Liste des titres incorrects
+        // Liste des titres incorrects
         let incorrectTitles = [];
         let currentSong = {};
         let incorrectCount = 0;
@@ -1174,81 +1175,50 @@
             suggestionsDiv.style.display = 'block';
         });
 
-// Soumission du formulaire
-guessForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const guess = guessInput.value.trim();
-    const currentTitle = currentSong.title;
+        // Soumission du formulaire
+        guessForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const guess = guessInput.value.trim();
+            const currentTitle = currentSong.title;
 
-    if (guess.toLowerCase() === currentTitle.toLowerCase()) {
-        // Réponse correcte
-        guessInput.value = '';
-        incorrectTitles = [];
-        incorrectCount = 0;
-        incorrectGuessesDiv.innerHTML = '';
-        joker1Info.style.display = 'none';
-        joker2Info.style.display = 'none';
-        joker1Button.disabled = true;
-        joker1Button.classList.remove('active');
-        joker1Button.innerHTML = 'Joker 1';
-        joker2Button.disabled = true;
-        joker2Button.classList.remove('active');
-        joker2Button.innerHTML = 'Joker 2';
-        displayRandomLyrics();
-    } else {
-        // Réponse incorrecte
-        if (!incorrectTitles.includes(guess)) {
-            incorrectTitles.push(guess);
-            incorrectCount++;
-            const incorrectSong = Object.values(chansons).find(song => song.title.toLowerCase() === guess.toLowerCase());
-            if (incorrectSong) {
-                const incorrectGuess = document.createElement('div');
-                incorrectGuess.classList.add('incorrect-guess');
-                incorrectGuess.innerHTML = `
-                    <img src="${incorrectSong.cover}" alt="${incorrectSong.title}">
-                    <span>${guess}</span>
-                `;
-                incorrectGuessesDiv.prepend(incorrectGuess); // Ajout au début pour afficher du plus récent au plus ancien
+            if (guess.toLowerCase() === currentTitle.toLowerCase()) {
+                // Réponse correcte
+                guessInput.value = '';
+                incorrectTitles = [];
+                incorrectCount = 0;
+                incorrectGuessesDiv.innerHTML = '';
+                joker1Info.style.display = 'none';
+                joker2Info.style.display = 'none';
+                joker1Button.disabled = true;
+                joker1Button.classList.remove('active');
+                joker1Button.innerHTML = 'Joker 1';
+        function activateJoker2() {
+    joker2Info.style.display = 'block'; // Affiche la boîte d'info du Joker 2
 
-                // Activer le premier joker après 3 erreurs
-                if (incorrectCount === 3) {
-                    console.log('Activation du premier joker');
-                    joker1Button.disabled = false;
-                    joker1Button.classList.add('active');
-                    joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
-                }
-                
-                // Activer le deuxième joker après 5 erreurs
-                if (incorrectCount === 5) {
-                    console.log('Activation du deuxième joker');
-                    joker2Button.disabled = false;
-                    joker2Button.classList.add('active');
-                    joker2Button.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}">`;
-                }
-            }
-        }
+    // Affiche l'image du Joker 2 dans la boîte d'info
+    const joker2Image = document.createElement('img');
+    joker2Image.src = currentSong.joker2Image; // Supposons que vous avez un champ joker2Image dans vos données de chanson
+    joker2Image.alt = currentSong.title;
+    joker2Info.innerHTML = 'Joker 2 : ';
+    joker2Info.appendChild(joker2Image);
 
-        // Effacer la réponse soumise
-        guessInput.value = '';
-    }
-});
+    // Ajuste la taille de l'image du Joker 2 si nécessaire
+    joker2Image.style.maxWidth = '100%'; // Ajustez selon vos besoins
 
-// Événement pour le joker 1
-joker1Button.addEventListener('click', function() {
-    if (!joker1Button.disabled) {
-        joker1Info.style.display = 'block';
-    }
-});
+    // Désactive le bouton du Joker 2 après utilisation
+    joker2Button.disabled = true;
+    joker2Button.classList.remove('active');
+}
 
-// Événement pour le joker 2
+// Événement pour le bouton Joker 2
 joker2Button.addEventListener('click', function() {
-    if (!joker2Button.disabled) {
-        joker2Info.style.display = 'block';
-    }
+    activateJoker2();
 });
 
-// Initialiser l'affichage des paroles au chargement de la page
-displayRandomLyrics();
+// Initialisation : Affiche une chanson aléatoire au chargement de la page
+window.addEventListener('load', function() {
+    displayRandomLyrics();
+});
     </script>
 </body>
 </html>
