@@ -1145,42 +1145,36 @@
                 joker2Button.classList.remove('active');
                 displayRandomLyrics();
             } else {
-                // Réponse incorrecte
-                if (!incorrectTitles.includes(guess)) {
-                    incorrectTitles.push(guess);
-                    incorrectCount++;
-                    const incorrectGuess = document.createElement('div');
-                    incorrectGuess.classList.add('incorrect-guess');
-                    incorrectGuess.innerHTML = `
-                        <img src="${currentSong.cover}" alt="${currentSong.title}">
-                        <span>${guess}</span>
-                    `;
-                    incorrectGuessesDiv.appendChild(incorrectGuess);
+    // Réponse incorrecte
+    if (!incorrectTitles.includes(guess)) {
+        incorrectTitles.push(guess);
+        incorrectCount++;
+        const incorrectGuess = document.createElement('div');
+        incorrectGuess.classList.add('incorrect-guess');
+        incorrectGuess.innerHTML = `
+            <img src="${currentSong.cover}" alt="${currentSong.title}">
+            <span>${guess}</span>
+        `;
+        incorrectGuessesDiv.appendChild(incorrectGuess);
 
-                    // Activer le premier joker après 3 erreurs
-                    if (incorrectCount === 3) {
-                        joker1Button.disabled = false;
-                        joker1Button.classList.add('active');
-                    }
+        // Activer le premier joker après 3 erreurs
+        if (incorrectCount === 3) {
+            joker1Button.disabled = false;
+            joker1Button.classList.add('active');
+            joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
+        }
 
-                    // Activer le deuxième joker après 5 erreurs
-                    if (incorrectCount === 5) {
-                        joker2Button.disabled = false;
-                        joker2Button.classList.add('active');
-                    }
-                }
-            }
-        });
-        document.getElementById('guess').value = '';
-        // Joker 1 (Feat ?)
-        joker1Button.addEventListener('click', function() {
-            alert(`Est-ce que c'est un featuring ? ${currentSong.feat}`);
-        });
+        // Activer le deuxième joker après 5 erreurs
+        if (incorrectCount === 5) {
+            joker2Button.disabled = false;
+            joker2Button.classList.add('active');
+            joker2Button.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}">`;
+        }
+    }
 
-        // Joker 2 (Cover)
-        joker2Button.addEventListener('click', function() {
-            alert(`Cover de la chanson : ${currentSong.cover}`);
-        });
+    // Effacer la réponse soumise
+    document.getElementById('guess').value = '';
+}
     </script>
 </body>
 </html>
