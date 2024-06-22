@@ -195,7 +195,10 @@
         <div id="suggestions"></div>
         <input type="submit" value="Soumettre">
     </form>
-    <div id="incorrectGuesses"></div>
+    <div id="incorrectGuesses">
+        <label for="incorrectGuessSelect">Réponses incorrectes :</label>
+        <select id="incorrectGuessSelect"></select>
+    </div>
     <div class="joker">
         <button id="joker1" class="joker-button" disabled>Joker 1</button>
         <button id="joker2" class="joker-button" disabled>Joker 2</button>
@@ -1114,17 +1117,17 @@
         };
 
 // Liste des titres incorrects
-        // Liste des titres incorrects
- // Liste des titres incorrects
-        let incorrectTitles = [];
-        let currentSong = {};
-        let incorrectCount = 0;
+            incorrectTitles: [],
+            currentSong: {},
+            incorrectCount: 0
+        };
 
         // Éléments HTML
         const lyricsDiv = document.getElementById('lyrics');
         const guessInput = document.getElementById('guess');
         const guessForm = document.getElementById('guessForm');
-        const incorrectGuessesDiv = document.getElementById('incorrectGuesses');
+        const suggestionsDiv = document.getElementById('suggestions');
+        const incorrectGuessesSelect = document.getElementById('incorrectGuessSelect');
         const joker1Button = document.getElementById('joker1');
         const joker2Button = document.getElementById('joker2');
         const joker1Info = document.getElementById('joker1-info');
@@ -1135,23 +1138,21 @@
             const keys = Object.keys(chansons);
             const randomKey = keys[Math.floor(Math.random() * keys.length)];
             const randomSong = chansons[randomKey];
-            currentSong = randomSong;
+            chansons.currentSong = randomSong;
             lyricsDiv.textContent = randomSong.parole;
         }
 
         // Événement pour la saisie utilisateur
         guessInput.addEventListener('input', function() {
             const inputValue = this.value.trim().toLowerCase();
-            const suggestionsDiv = document.getElementById('suggestions');
             suggestionsDiv.innerHTML = '';
 
             if (inputValue.length === 0) {
                 suggestionsDiv.style.display = 'none';
                 return;
             }
-
-            const matches = Object.values(chansons).filter(song =>
-                song.title.toLowerCase().includes(inputValue) && !incorrectTitles.includes(song.title)
+        const matches = Object.values(chansons).filter(song =>
+                song.title.toLowerCase().includes(inputValue) && !chansons.incorrectTitles.includes(song.title)
             );
 
             const suggestionList = document.createElement('ul');
@@ -1174,80 +1175,79 @@
         });
 
         // Soumission du formulaire
-guessForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const guess = guessInput.value.trim();
-    const currentTitle = currentSong.title;
+        guessForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const guess = guessInput.value.trim();
+            const currentTitle = chansons.currentSong.title;
 
-    if (guess.toLowerCase() === currentTitle.toLowerCase()) {
-        // Réponse correcte
-        guessInput.value = '';
-        incorrectTitles = [];
-        incorrectCount = 0;
-        incorrectGuessesDiv.innerHTML = '';
-        joker1Info.style.display = 'none';
-        joker2Info.style.display = 'none';
-        joker1Button.disabled = true;
-        joker1Button.classList.remove('active');
-        joker1Button.innerHTML = 'Joker 1';
-        joker2Button.disabled = true;
-        joker2Button.classList.remove('active');
-        joker2Button.innerHTML = 'Joker 2';
-        displayRandomLyrics();
-    } else {
-        // Réponse incorrecte
-        if (!incorrectTitles.includes(guess)) {
-            incorrectTitles.push(guess);
-            incorrectCount++;
-            const incorrectSong = Object.values(chansons).find(song => song.title.toLowerCase() === guess.toLowerCase());
-            if (incorrectSong) {
-                const incorrectGuess = document.createElement('div');
-                incorrectGuess.classList.add('incorrect-guess');
-                incorrectGuess.innerHTML = `
-                    <img src="${incorrectSong.cover}" alt="${incorrectSong.title}">
-                    <span>${guess}</span>
-                `;
-                incorrectGuessesDiv.prepend(incorrectGuess); // Ajout au début pour afficher du plus récent au plus ancien
+            if (guess.toLowerCase() === currentTitle.toLowerCase()) {
+                // Réponse correcte
+                guessInput.value = '';
+                chansons.incorrectTitles = [];
+                chansons.incorrectCount = 0;
+                incorrectGuessesSelect.innerHTML = '';
+                joker1Info.style.display = 'none';
+                joker2Info.style.display = 'none';
+                joker1Button.disabled = true;
+                joker1Button.classList.remove('active');
+                joker1Button.innerHTML = 'Joker 1';
+                joker2Button.disabled = true;
+                joker2Button.classList.remove('active');
+                joker2Button.innerHTML = 'Joker 2';
+                displayRandomLyrics();
+            } else {
+                // Réponse incorrecte
+                if (!chansons.incorrectTitles.includes(guess)) {
+                    chansons.incorrectTitles.push(guess);
+                    chansons.incorrectCount++;
+                    const incorrectSong = Object.values(chansons).find(song => song.title.toLowerCase() === guess.toLowerCase());
+                    if (incorrectSong) {
+                        const incorrectGuessOption = document.createElement('option');
+                        incorrectGuessOption.textContent = guess;
+                        incorrectGuessesSelect.appendChild(incorrectGuessOption); // Ajout de la réponse incorrecte à la liste déroulante
 
-                // Activer le premier joker après 3 erreurs
-                if (incorrectCount === 3) {
-                    console.log('Activation du premier joker');
-                    joker1Button.disabled = false;
-                    joker1Button.classList.add('active');
-                    joker1Button.innerHTML = currentSong.feat === 'Oui' ? 'Oui' : 'Non';
+                        // Activer le premier joker après 3 erreurs
+                        if (chansons.incorrectCount === 3) {
+                            console.log('Activation du premier joker');
+                            joker1Button.disabled = false;
+                            joker1Button.classList.add('active');
+                            joker1Button.innerHTML = chansons.currentSong.feat === 'Oui' ? 'Oui' : 'Non';
+                        }
+                        
+                        // Activer le deuxième joker après 5 erreurs
+                        if (chansons.incorrectCount === 5) {
+                            console.log('Activation du deuxième joker');
+                            joker2Button.disabled = false;
+                            joker2Button.classList.add('active');
+                            joker2Button.innerHTML = `<img src="${chansons.currentSong.cover}" alt="${chansons.currentSong.title}">`;
+                        }
+                    }
                 }
-                
-                // Activer le deuxième joker après 5 erreurs
-                if (incorrectCount === 5) {
-                    console.log('Activation du deuxième joker');
-                    joker2Button.disabled = false;
-                    joker2Button.classList.add('active');
-                    joker2Button.innerHTML = `<img src="${currentSong.cover}" alt="${currentSong.title}">`;
-                }
+
+                // Effacer la réponse soumise
+                guessInput.value = '';
             }
-        }
+        });
 
-        // Effacer la réponse soumise
-        guessInput.value = '';
-    }
-});
+        // Événement pour le joker 1
+        joker1Button.addEventListener('click', function() {
+            if (!joker1Button.disabled) {
+                joker1Info.style.display = 'block';
+            }
+        });
 
-// Événement pour le joker 1
-joker1Button.addEventListener('click', function() {
-    if (!joker1Button.disabled) {
-        joker1Info.style.display = 'block';
-    }
-});
+        // Événement pour le joker 2
+        joker2Button.addEventListener('click', function() {
+            if (!joker2Button.disabled) {
+                joker2Info.style.display = 'block';
+            }
+        });
 
-// Événement pour le joker 2
-joker2Button.addEventListener('click', function() {
-    if (!joker2Button.disabled) {
-        joker2Info.style.display = 'block';
-    }
-});
-
-// Initialiser l'affichage des paroles au chargement de la page
-displayRandomLyrics();
+        // Initialiser l'affichage des paroles au chargement de la page
+        displayRandomLyrics();
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
