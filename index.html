@@ -136,7 +136,7 @@
             margin-right: 10px;
         }
 
-        #joker {
+        .joker-button {
             margin-top: 20px;
             padding: 10px;
             font-size: 18px;
@@ -147,7 +147,7 @@
             cursor: not-allowed;
         }
 
-        #joker.active {
+        .joker-button.active {
             background-color: green;
             cursor: pointer;
         }
@@ -162,7 +162,8 @@
         <input type="submit" value="Soumettre">
     </form>
     <div id="incorrectGuesses"></div>
-    <button id="joker" disabled>Joker (Feat ?)</button>
+    <button id="joker1" class="joker-button" disabled>Joker 1 (Feat ?)</button>
+    <button id="joker2" class="joker-button" disabled>Joker 2 (Cover)</button>
 
     <script>
         const chansons = {
@@ -1079,7 +1080,8 @@
         const guessInput = document.getElementById('guess');
         const guessForm = document.getElementById('guessForm');
         const incorrectGuessesDiv = document.getElementById('incorrectGuesses');
-        const jokerButton = document.getElementById('joker');
+        const joker1Button = document.getElementById('joker1');
+        const joker2Button = document.getElementById('joker2');
 
         // Affichage aléatoire d'une chanson au chargement
         function displayRandomLyrics() {
@@ -1137,9 +1139,10 @@
                 incorrectTitles = [];
                 incorrectCount = 0;
                 incorrectGuessesDiv.innerHTML = '';
-                jokerButton.disabled = true;
-                jokerButton.classList.remove('active');
-                jokerButton.textContent = 'Joker (Feat ?)';
+                joker1Button.disabled = true;
+                joker1Button.classList.remove('active');
+                joker2Button.disabled = true;
+                joker2Button.classList.remove('active');
                 displayRandomLyrics();
             } else {
                 // Réponse incorrecte
@@ -1148,32 +1151,35 @@
                     incorrectCount++;
                     const incorrectGuess = document.createElement('div');
                     incorrectGuess.classList.add('incorrect-guess');
-                    const cover = chansons[Object.keys(chansons).find(key => chansons[key].title.toLowerCase() === guess.toLowerCase())]?.cover || '';
                     incorrectGuess.innerHTML = `
-                        ${cover ? `<img src="${cover}" alt="${guess}">` : ''}
+                        <img src="${currentSong.cover}" alt="${currentSong.title}">
                         <span>${guess}</span>
                     `;
                     incorrectGuessesDiv.appendChild(incorrectGuess);
 
-                    if (incorrectCount >= 3) {
-                        jokerButton.disabled = false;
-                        jokerButton.classList.add('active');
+                    // Activer le premier joker après 3 erreurs
+                    if (incorrectCount === 3) {
+                        joker1Button.disabled = false;
+                        joker1Button.classList.add('active');
+                    }
+
+                    // Activer le deuxième joker après 5 erreurs
+                    if (incorrectCount === 5) {
+                        joker2Button.disabled = false;
+                        joker2Button.classList.add('active');
                     }
                 }
-
-                guessInput.value = '';
             }
-
-            const suggestionsDiv = document.getElementById('suggestions');
-            suggestionsDiv.style.display = 'none';
         });
 
-        // Utilisation du joker
-        jokerButton.addEventListener('click', function() {
-            if (!this.disabled && this.classList.contains('active')) {
-                this.textContent = `Feat ? ${currentSong.feat}`;
-                this.disabled = true;
-            }
+        // Joker 1 (Feat ?)
+        joker1Button.addEventListener('click', function() {
+            alert(`Est-ce que c'est un featuring ? ${currentSong.feat}`);
+        });
+
+        // Joker 2 (Cover)
+        joker2Button.addEventListener('click', function() {
+            alert(`Cover de la chanson : ${currentSong.cover}`);
         });
     </script>
 </body>
