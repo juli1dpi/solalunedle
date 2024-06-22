@@ -1160,17 +1160,19 @@
                         jokerButton.classList.add('active');
                     }
                 }
+
                 guessInput.value = '';
             }
 
-            // Réinitialisation des suggestions
-            document.getElementById('suggestions').style.display = 'none';
+            const suggestionsDiv = document.getElementById('suggestions');
+            suggestionsDiv.style.display = 'none';
         });
 
         // Utilisation du joker
         jokerButton.addEventListener('click', function() {
             if (!this.disabled && this.classList.contains('active')) {
-                alert(`Joker: Cette chanson est un featuring? ${currentSong.feat}`);
+                this.textContent = `Feat ? ${currentSong.feat}`;
+                this.disabled = true;
             }
         });
     </script>
