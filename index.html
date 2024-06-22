@@ -967,6 +967,7 @@
                 // Réponse correcte
                 guessInput.value = '';
                 incorrectTitles = []; // Réinitialisation des titres incorrects
+                incorrectGuessesDiv.innerHTML = ''; // Efface les erreurs précédentes
                 displayRandomLyrics();
             } else {
                 // Réponse incorrecte
@@ -974,11 +975,14 @@
                     incorrectTitles.push(guess);
                     const incorrectGuess = document.createElement('div');
                     incorrectGuess.classList.add('incorrect-guess');
+                    const cover = chansons[Object.keys(chansons).find(key => chansons[key].title.toLowerCase() === guess.toLowerCase())]?.cover || '';
                     incorrectGuess.innerHTML = `
+                        ${cover ? `<img src="${cover}" alt="${guess}">` : ''}
                         <span>${guess}</span>
                     `;
                     incorrectGuessesDiv.appendChild(incorrectGuess);
                 }
+                guessInput.value = ''; // Efface la réponse soumise même si incorrecte
             }
 
             // Réinitialisation des suggestions
