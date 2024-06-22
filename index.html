@@ -956,12 +956,17 @@
         guessForm.addEventListener('submit', function(event) {
             event.preventDefault();
             const guess = guessInput.value.trim();
-            const lyricsTitle = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent).title;
+            const currentSong = Object.values(chansons).find(song => song.parole === lyricsDiv.textContent);
 
-            if (guess === lyricsTitle) {
+            if (!currentSong) {
+                alert('Erreur: Paroles non trouvées dans la base de données.');
+                return;
+            }
+
+            if (guess.toLowerCase() === currentSong.title.toLowerCase()) {
                 // Réponse correcte
                 guessInput.value = '';
-                incorrectTitles = [];
+                incorrectTitles = []; // Réinitialisation des titres incorrects
                 displayRandomLyrics();
             } else {
                 // Réponse incorrecte
@@ -970,7 +975,6 @@
                     const incorrectGuess = document.createElement('div');
                     incorrectGuess.classList.add('incorrect-guess');
                     incorrectGuess.innerHTML = `
-                        <img src="${chansons[guess].cover}" alt="${chansons[guess].title}">
                         <span>${guess}</span>
                     `;
                     incorrectGuessesDiv.appendChild(incorrectGuess);
@@ -980,7 +984,6 @@
             // Réinitialisation des suggestions
             document.getElementById('suggestions').style.display = 'none';
         });
-
     </script>
 </body>
 </html>
